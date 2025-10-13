@@ -1,0 +1,29 @@
+{
+  "name": "taskmanager",
+  "version": "1.0.0",
+  "description": "Gestor de tareas",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoseJavega/taskManager.git"
+  },
+  "keywords": [
+    "tasks",
+    "tareas",
+    "gestor"
+  ],
+  "author": "joseJavega",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoseJavega/taskManager/issues"
+  },
+  "homepage": "https://github.com/JoseJavega/taskManager#readme",
+  "dependencies": {
+    "db-local": "3.1.0",
+    "dotenv": "17.2.3",
+    "express": "5.1.0"
+  }
+}
