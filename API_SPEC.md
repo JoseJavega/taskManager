@@ -24,7 +24,7 @@ Obtiene todas las tareas.
 `assignedTo=<userId>` (filtra tareas asignadas a un usuario — requiere backend que consulte user_tasks)
 
 * **Respuesta 200:** Lista de tareas.
----
+```
 [
   {
     "taskId":"uuid",
@@ -37,7 +37,7 @@ Obtiene todas las tareas.
     "updatedAt":"2025-10-14T10:05:00Z"
   }
 ]
----
+```
 GET /tasks/:taskId
 
 200: objeto tarea (ver ejemplo arriba)
