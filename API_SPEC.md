@@ -38,70 +38,59 @@ Obtiene todas las tareas.
   }
 ]
 ```
-GET /tasks/:taskId
+### GET /tasks/:taskId
 
-200: objeto tarea (ver ejemplo arriba)
+* **Respuesta 200:** objeto tarea (ver ejemplo arriba)
+* **Respuesta 404:** { "error": "Task not found" }
 
-404: { "error": "Task not found" }
-
-POST /tasks
+### POST /tasks
 
 Crea una tarea nueva.
 
 Body
-
+```
 {
   "title":"Título obligatorio",
   "description":"Opcional",
   "ownerId":"uuid|null"    // opcional
 }
+```
+* **Respuesta 201:** Created con objeto creado.
+* **Respuesta 400:** Bad Request si falta title o formato inválido.
 
-
-Responses
-
-201 Created con objeto creado.
-
-400 Bad Request si falta title o formato inválido.
-
-PUT /tasks/:taskId
+### PUT /tasks/:taskId
 
 Actualización parcial (full-replace es aceptable también).
 
 Body (ejemplo)
-
+```
 {
   "title": "Nuevo título",
   "description": "Nueva descripción",
   "completed": true
 }
+```
+* **Respuesta 200:** tarea actualizada
+* **Respuesta 404:**si no existe
 
+### DELETE /tasks/:taskId
 
-200: tarea actualizada
+* **Respuesta 204:** eliminado correctamente
+* **Respuesta 404:** si no existe
 
-404 si no existe
-
-DELETE /tasks/:taskId
-
-204: eliminado correctamente
-
-404 si no existe
-
-POST /tasks/:taskId/toggle-complete
+### POST /tasks/:taskId/toggle-complete
 
 Conmutador rápido de completado.
 
-200: tarea con completed actualizado.
+* **Respuesta 200:** tarea con completed actualizado.
 
-Endpoints de Asignaciones / Relación Usuario–Tarea
-
+## Endpoints de Asignaciones / Relación Usuario–Tarea
 Nota: Si se decide no tener user_tasks, algunos endpoints simplifican a ownerId en tasks. Aquí se contempla user_tasks para flexibilidad.
 
-GET /tasks/:taskId/assignments
+### GET /tasks/:taskId/assignments
 
 Devuelve lista de user_tasks para la tarea.
-
-200
-
+```
 [
   {
     "userTaskId":"uuid",
@@ -112,55 +101,56 @@ Devuelve lista de user_tasks para la tarea.
     "active": true
   }
 ]
+```
+* **Respuesta 200:**
 
-POST /tasks/:taskId/assign
+### POST /tasks/:taskId/assign
 
 Asignar tarea a un usuario (requiere autorización en futuro).
 
 Body
-
+```
 { "assignedTo": "userId", "assignedBy": "userIdOptional" }
+```
 
-
-200: devuelve registro user_tasks creado o 409 Conflict si ya existe una asignación activa duplicada (según reglas).
+* **Respuesta 200:** devuelve registro user_tasks creado
+* **Respuesta 409:** Conflict si ya existe una asignación activa duplicada (según reglas).
 
 Actualización adicional: si se quiere que tasks.ownerId refleje la asignación principal, actualizar tasks.ownerId.
 
-POST /tasks/:taskId/unassign
+### POST /tasks/:taskId/unassign
 
 Desactivar asignación (marcar active=false) o eliminar user_tasks.
 
 Body
-
+```
 { "userId": "uuid" }
+```
+* **Respuesta 200:** confirmación.
 
-
-200: confirmación.
-
-GET /users/:userId/tasks
+### GET /users/:userId/tasks
 
 Lista de tareas asignadas o propiedad del usuario.
 
 Query params: active=true|false
 
-200: array de tareas.
+* **Respuesta 200:** array de tareas.
 
-Endpoints de Sesiones (cronometraje)
-POST /tasks/:taskId/sessions/start
+## Endpoints de Sesiones (cronometraje)
+### POST /tasks/:taskId/sessions/start
 
 Inicia una sesión de cronometraje sobre taskId.
 
 Body
-
+```
 { "userId": "uuid" } // obligatorio cuando hay usuarios
+```
 
-
-Validaciones/Reglas:
-
+* Validaciones/Reglas:
 Evitar crear múltiples sesiones running para el mismo (taskId, userId) si la regla de negocio lo prohíbe.
 
-201
-
+* **Respuesta 201:** Created con objeto creado.
+```
 {
   "sessionId":"uuid",
   "taskId":"uuid",
@@ -168,23 +158,20 @@ Evitar crear múltiples sesiones running para el mismo (taskId, userId) si la re
   "startedAt":"2025-10-14T12:00:00Z",
   "status":"running"
 }
+```
 
-POST /tasks/:taskId/sessions/:sessionId/stop
+### POST /tasks/:taskId/sessions/:sessionId/stop
 
 Detiene la sesión, calcula duración y actualiza tasks.timeAccumulated.
 
 Action:
-
 set stoppedAt = now
-
 duration = stoppedAt - startedAt
-
 status = 'stopped'
-
 tasks.timeAccumulated += duration (operación atómica)
 
-200
-
+* **Respuesta 200:**
+```
 {
   "sessionId":"uuid",
   "taskId":"uuid",
@@ -194,37 +181,32 @@ tasks.timeAccumulated += duration (operación atómica)
   "duration":1500,
   "status":"stopped"
 }
+```
+* **Respuesta 400:**si ya estaba detenida o sessionId inválido.
+* **Respuesta 404:** si taskId o sessionId no existen.
 
-
-400 si ya estaba detenida o sessionId inválido.
-
-404 si taskId o sessionId no existen.
-
-POST /tasks/:taskId/sessions/:sessionId/cancel
+### POST /tasks/:taskId/sessions/:sessionId/cancel
 
 Anula sesión en curso (status=cancelled), no suma duración.
 
-GET /tasks/:taskId/sessions
+### GET /tasks/:taskId/sessions
 
 Lista de sesiones para una tarea.
 
-Query params: userId (opcional), status (optional)
+* Query params: userId (opcional), status (optional)
 
-200: array de sesiones (ver ejemplo arriba)
+* **Respuesta 200:** array de sesiones (ver ejemplo arriba)
 
-GET /users/:userId/sessions
+### GET /users/:userId/sessions
 
 Obtiene historial de sesiones por usuario (útil para reportes).
 
-Endpoints de Usuarios (resumen futuro)
+## Endpoints de Usuarios (resumen futuro)
 
-POST /auth/register
-
-POST /auth/login
-
-GET /users/:userId
-
-PUT /users/:userId
+### POST /auth/register
+### POST /auth/login
+### GET /users/:userId
+### PUT /users/:userId
 
 Autenticación / autorización: en fases futuras usar JWT o sesiones y añadir control de permisos sobre endpoints de asignación y manipulación de sesiones.
 
