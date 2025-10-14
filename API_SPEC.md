@@ -14,20 +14,17 @@ Códigos de respuesta principales:
 200 OK, 201 Created, 204 No Content, 400 Bad Request, 404 Not Found, 409 Conflict, 500 Internal Server Error.
 
 ## Endpoints de Tareas (tasks)
-GET /tasks
+### GET /tasks
 
 Obtiene todas las tareas.
 
-Query params (opcionales):
+* **Query params:** (opcionales):
+`completed=true|false`
+`ownerId=<userId>`
+`assignedTo=<userId>` (filtra tareas asignadas a un usuario — requiere backend que consulte user_tasks)
 
-completed=true|false
-
-ownerId=<userId>
-
-assignedTo=<userId> (filtra tareas asignadas a un usuario — requiere backend que consulte user_tasks)
-
-200
-
+* **Respuesta 200:** Lista de tareas.
+---
 [
   {
     "taskId":"uuid",
@@ -40,7 +37,7 @@ assignedTo=<userId> (filtra tareas asignadas a un usuario — requiere backend q
     "updatedAt":"2025-10-14T10:05:00Z"
   }
 ]
-
+---
 GET /tasks/:taskId
 
 200: objeto tarea (ver ejemplo arriba)
