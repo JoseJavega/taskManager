@@ -1,0 +1,122 @@
+[
+{
+"ID": "ISSUE-001",
+"Titulo": "Configurar entorno de desarrollo Node.js",
+"Descripcion": "Inicializar el proyecto con package.json, instalar dependencias (express, db-local, nodemon, dotenv, eslint) y configurar scripts básicos.",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-002",
+"Titulo": "Configurar estructura del proyecto backend",
+"Descripcion": "Crear las carpetas base: /src, /src/routes, /src/controllers, /src/services, /src/db. Añadir configuración inicial de Express.",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-003",
+"Titulo": "Implementar base de datos local con db-local",
+"Descripcion": "Configurar db-local, definir colecciones 'tasks' con sus campos iniciales y funciones CRUD básicas (get, add, update, delete).",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-004",
+"Titulo": "Endpoint GET /tasks",
+"Descripcion": "Implementar ruta para obtener todas las tareas desde db-local con filtrado opcional por estado (completed).",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-005",
+"Titulo": "Endpoint GET /tasks/:id",
+"Descripcion": "Implementar ruta para obtener una tarea específica mediante su taskId.",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-006",
+"Titulo": "Endpoint POST /tasks",
+"Descripcion": "Implementar creación de tarea validando campos requeridos y generando taskId único (UUID).",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-007",
+"Titulo": "Endpoint PUT /tasks/:id",
+"Descripcion": "Implementar actualización parcial de tarea (título, descripción, completado) y persistir cambios en db-local.",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-008",
+"Titulo": "Endpoint DELETE /tasks/:id",
+"Descripcion": "Implementar eliminación de tarea por ID y actualizar almacenamiento local.",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-009",
+"Titulo": "Endpoint POST /tasks/:id/toggle-complete",
+"Descripcion": "Implementar acción de marcado/desmarcado de tareas como completadas, con persistencia del cambio.",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-010",
+"Titulo": "Diseñar interfaz de usuario (UI) inicial",
+"Descripcion": "Diseñar la estructura base del frontend en HTML y CSS: lista de tareas, formulario de creación, botones de acción.",
+"Rol": "Diseño"
+},
+{
+"ID": "ISSUE-011",
+"Titulo": "Implementar lógica de frontend en Vanilla JS",
+"Descripcion": "Conectar el frontend con la API REST. Implementar funciones para listar, crear, editar y eliminar tareas mediante fetch().",
+"Rol": "Frontend"
+},
+{
+"ID": "ISSUE-012",
+"Titulo": "Implementar marcado/desmarcado de tareas en UI",
+"Descripcion": "Añadir control visual (checkbox o botón) para cambiar el estado de completado en el cliente y sincronizar con la API.",
+"Rol": "Frontend"
+},
+{
+"ID": "ISSUE-013",
+"Titulo": "Validar formularios de creación y edición de tareas",
+"Descripcion": "Añadir validaciones en el frontend (campos obligatorios, longitud máxima) y mostrar mensajes de error o confirmación.",
+"Rol": "Frontend"
+},
+{
+"ID": "ISSUE-014",
+"Titulo": "Pruebas unitarias de servicios de tareas",
+"Descripcion": "Crear tests unitarios para las funciones de servicio (createTask, updateTask, deleteTask, getTasks) usando Jest o similar.",
+"Rol": "QA"
+},
+{
+"ID": "ISSUE-015",
+"Titulo": "Pruebas de integración de API REST",
+"Descripcion": "Probar endpoints del backend mediante herramientas como Postman o supertest, validando códigos de estado y datos devueltos.",
+"Rol": "QA"
+},
+{
+"ID": "ISSUE-016",
+"Titulo": "Configurar servidor Express para despliegue local",
+"Descripcion": "Configurar variables de entorno (.env), puerto, middlewares de logging y manejo de errores global.",
+"Rol": "DevOps"
+},
+{
+"ID": "ISSUE-017",
+"Titulo": "Configurar .gitignore y control de versiones",
+"Descripcion": "Añadir archivo .gitignore con node_modules, .env, logs, y data local. Crear rama principal para desarrollo.",
+"Rol": "DevOps"
+},
+{
+"ID": "ISSUE-018",
+"Titulo": "Prototipo de cronometraje de tareas (futuro)",
+"Descripcion": "Diseñar e implementar prototipo de endpoints start/stop de sesiones de tarea y persistencia de duración acumulada.",
+"Rol": "Backend"
+},
+{
+"ID": "ISSUE-019",
+"Titulo": "Diseño UI de cronómetro (futuro)",
+"Descripcion": "Diseñar el componente visual del cronómetro de tareas con botones de inicio y fin, actualizando el tiempo en pantalla.",
+"Rol": "Diseño"
+},
+{
+"ID": "ISSUE-020",
+"Titulo": "Autenticación y perfiles de usuario (futuro)",
+"Descripcion": "Implementar registro, login y protección de endpoints mediante JWT o sesiones. Añadir esquema users a db-local.",
+"Rol": "Backend"
+}
+]
