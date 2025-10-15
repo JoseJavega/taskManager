@@ -12,13 +12,17 @@ export class TaskModel {
     };
     Tasks.create(newTask).save();
     return newTask._id;
-  }
+  };
 
   static update(taskId,{title, description, completed }){}
 
-  static delete(taskId){}
+  static async delete(taskId){
+    const taskExists = this.getById(taskId)
+  }
 
-  static getById(taskId){}
+  static getById(taskId){
+    return Tasks.findOne({ _id: taskId});
+  }
 
   static getAll(filters={}){}
 }
