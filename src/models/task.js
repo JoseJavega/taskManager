@@ -1,0 +1,51 @@
+import { randomUUID } from 'node:crypto';
+import { Tasks } from "../DB/DB_schemas.js";
+
+export class TaskModel {
+
+  static create({input}){
+    const newTask = {
+      _id: randomUUID(),
+      title: input.title,
+      description: input.description,
+      createdAt: new Date().toISOString()
+    };
+    Tasks.create(newTask).save();
+    return newTask;
+  };
+
+  static async update(taskId, input){
+    const taskExists = await this.getById(taskId);
+    if (!taskExists){ return null; };
+
+    // lee los datos del input y se guardan en inputData
+    const {title, description,completed, createdAt, updatedAt} = input;
+    const inputData = {title, description,completed, createdAt, updatedAt};
+    // inputData trae campos undefined que sobre escribirian los de la task al hacer el merge
+    // Object.entries(inputData) -> combierte el objeto inputData en array tipo [["name", "Ana"], ["age", 30]] para poder filtrarlo
+    // Object.fromEntries(array) -> combierte un array como el anterior, nuevamente en objeto
+    const cleanInputData = Object.fromEntries( Object.entries(inputData).filter(([_, value]) => value !== undefined) );
+    //añadimos siempre updatedAt
+    cleanInputData.updatedAt = new Date().toISOString();
+
+    const updatedTask = await taskExists.update( cleanInputData ).save();
+
+    return updatedTask;
+  };
+
+  static async delete(taskId){
+    const taskExists = await this.getById(taskId);
+    if (!taskExists){ return false; };
+
+    Tasks.remove(taskId);
+    return taskId;
+  }
+
+  static async getById(taskId){
+    return await Tasks.findOne({ _id: taskId});
+  }
+
+  static async getAll(filters={}){
+    return await Tasks.find();
+  }
+}

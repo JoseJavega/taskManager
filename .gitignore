@@ -3,3 +3,7 @@ node_modules/
 
 # Archivos de entorno y configuración local
 .env
+
+# directorios varios
+src/requests/
+context/
