@@ -39,16 +39,16 @@ project-root/
 │   ├── controllers/
 │   │   └── task.js
 │   ├── DB/
-│   │   ├── DB_schemas.js         # Definición de esquemas para db-local
-│   │   └── tasks.json            # Datos persistidos de las tareas en formato json (tabla de la db-local)
+│   │   ├── DB_schemas.js     # Definición de esquemas para db-local
+│   │   └── tasks.json        # Datos persistidos de las tareas en formato json (tabla de la db-local)
 │   ├── middlewares/
-│   │   └── cors.js               # Uso de la libreria cors para la gestión de las mismas
+│   │   └── cors.js           # Uso de la libreria cors para la gestión de las mismas
 │   ├── models/
 │   │   └── task.js
 │   ├── routes/
 │   │   └── tasks.js
 │   ├── schemas/
-│   │   └── task.js               # Esquema de las tareas para validacion de datos usanso zod
+│   │   └── task.js           # Esquema de las tareas para validacion de datos usanso zod
 │   └── index.js
 │
 ├── public/ (frontend)
