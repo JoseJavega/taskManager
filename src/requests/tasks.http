@@ -3,15 +3,24 @@ POST http://localhost:3000/tasks
 Content-Type: application/json
 
 {
-  "title": "A estudial 4 !!",
-  "description": "Tarea de prueba"
+  "title": "Explicarle a Anita",
+  "description": "porque no se sabe"
 }
 
 ### RECUPERAR UNA tarea
-GET http://localhost:3000/tasks/fa2147fa-8f48-4663-8dd4-9ff7c200be94
+GET http://localhost:3000/tasks/6aa80565-ed8e-4d89-a1bc-f286c7b684cd
 
 ### RECUPERAR TODAS las tareas
 GET http://localhost:3000/tasks
 
 ### DELETE task
-DELETE  http://localhost:3000/tasks/cbe83149-e530-4e17-93c0-8c59b5f6a30a
+DELETE  http://localhost:3000/tasks/6aa80565-ed8e-4d89-a1bc-f286c7b684cd
+
+### UPDATE tarea
+PATCH  http://localhost:3000/tasks/6aa80565-ed8e-4d89-a1bc-f286c7b684cd
+Content-Type: application/json
+
+{
+  "title": "Anita se ha ido",
+  "completed": true
+}

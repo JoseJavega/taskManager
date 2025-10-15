@@ -7,3 +7,4 @@ tasksRouter.post('/', TaskController.create);
 tasksRouter.delete('/:id', TaskController.delete);
 tasksRouter.get('/:id', TaskController.getById);
 tasksRouter.get('/',TaskController.getAll);
+tasksRouter.patch('/:id', TaskController.update);

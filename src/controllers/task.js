@@ -11,7 +11,7 @@ export class TaskController{
 
   static async getById (req, res){
     const { id } = req.params;
-    const task = TaskModel.getById(id);
+    const task = await TaskModel.getById(id);
     if (!task){
       return res.status(404).json({message: 'Task not found'});
     };
@@ -30,7 +30,7 @@ export class TaskController{
 
   static async delete (req, res){
     const { id } = req.params;
-    const result = TaskModel.delete(id);
+    const result = await TaskModel.delete(id);
     if (result===false){
       return res.status(404).json({message:'Task not found'});
     }
@@ -44,12 +44,10 @@ export class TaskController{
     };
 
     const { id } = req.params;
-    const taskExists = await TaskModel.getById(id);
-    if (!taskExists){
+    const updatedTask = await TaskModel.update(id, validate.data);
+    if (!updatedTask){
       return res.status(404).json({message: 'Task not found'});
     };
-
-    const updatedTask = await TaskModel.update(id,{input: validate.data});
     return res.status(200).json(updatedTask);
   };
 

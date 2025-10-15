@@ -58,7 +58,7 @@ Body
 * **Respuesta 201:** Created con objeto creado.
 * **Respuesta 400:** Bad Request si falta title o formato inválido.
 
-### PUT /tasks/:taskId
+### PATH /tasks/:taskId
 
 Actualización parcial (full-replace es aceptable también).
 
@@ -71,7 +71,7 @@ Body (ejemplo)
 }
 ```
 * **Respuesta 200:** tarea actualizada
-* **Respuesta 404:**si no existe
+* **Respuesta 404:** si no existe
 
 ### DELETE /tasks/:taskId
 
