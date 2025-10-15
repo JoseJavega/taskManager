@@ -28,6 +28,7 @@ export class TaskModel {
     return Tasks.findOne({ _id: taskId});
   }
 
-  static getAll(filters={}){
+  static async getAll(filters={}){
+    return Tasks.find();
   }
 }

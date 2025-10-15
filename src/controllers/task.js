@@ -5,7 +5,7 @@ import { validateTask, validatePartialTask } from "../schemas/task.js";
 export class TaskController{
   static async getAll (req, res){
     // TO DO - opciones de parametros de filtrado
-    const tasks=TaskModel.getAll();
+    const tasks= await TaskModel.getAll();
     return res.status(200).json(tasks);
   };
 
@@ -13,7 +13,7 @@ export class TaskController{
     const { id } = req.params;
     const task = TaskModel.getById(id);
     if (!task){
-      res.status(404).json({message: 'Task not found'});
+      return res.status(404).json({message: 'Task not found'});
     };
 
     return res.status(200).json(task);
@@ -46,7 +46,7 @@ export class TaskController{
     const { id } = req.params;
     const taskExists = await TaskModel.getById(id);
     if (!taskExists){
-      res.status(404).json({message: 'Task not found'});
+      return res.status(404).json({message: 'Task not found'});
     };
 
     const updatedTask = await TaskModel.update(id,{input: validate.data});
