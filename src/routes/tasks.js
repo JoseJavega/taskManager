@@ -4,5 +4,5 @@ import { TaskController } from "../controllers/task.js";
 export const tasksRouter = Router();
 
 tasksRouter.post('/', TaskController.create);
-tasksRouter.delete('/', TaskController.delete);
+tasksRouter.delete('/:id', TaskController.delete);
 tasksRouter.get('/:id', TaskController.getById);

@@ -3,7 +3,7 @@ import { Tasks } from "../DB/DB_schemas.js";
 
 export class TaskModel {
 
-  static async create({input}){
+  static create({input}){
     const newTask = {
       _id: randomUUID(),
       title: input.title,
@@ -16,13 +16,18 @@ export class TaskModel {
 
   static update(taskId,{title, description, completed }){}
 
-  static async delete(taskId){
-    const taskExists = this.getById(taskId)
+  static delete(taskId){
+    const taskExists = this.getById(taskId);
+    if (!taskExists){ return false; };
+
+    Tasks.remove(taskId);
+    return taskId;
   }
 
   static getById(taskId){
     return Tasks.findOne({ _id: taskId});
   }
 
-  static getAll(filters={}){}
+  static getAll(filters={}){
+  }
 }

@@ -8,4 +8,7 @@ Content-Type: application/json
 }
 
 ### RECUPERAR UNA tarea
-GET http://localhost:3000/tasks/307dace7-bc9f-4a78-b77b-017c65db3991
+GET http://localhost:3000/tasks/fa2147fa-8f48-4663-8dd4-9ff7c200be94
+
+### DELETE task
+DELETE  http://localhost:3000/tasks/cbe83149-e530-4e17-93c0-8c59b5f6a30a

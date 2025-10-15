@@ -34,7 +34,7 @@ export class TaskController{
     if (result===false){
       return res.status(404).json({message:'Task not found'});
     }
-    return res.status(204).json({message:'Task deleted'});
+    return res.status(204).json({message:`Task deleted id:${result}`});
   };
 
   static async update(req,res){
