@@ -9,5 +9,6 @@ export const Tasks = Schema('tasks',{
   description: { type: String },
   completed: { type : Boolean, default:false},
   createdAt: { type: String, required: true},
-  updatedAt: { type: String}
+  updatedAt: { type: String},
+  finishedAt: { type: String}
 });
