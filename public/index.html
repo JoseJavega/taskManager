@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/normalize.css">
   <link rel="stylesheet" href="./styles/index.css">
+  <script type="module" src="./js/main.js"></script>
   <title>Task Manager</title>
 </head>
 <body>
@@ -13,7 +14,13 @@
   </header>
   <main>
     <!-- FORMULARIOS DE ALTA Y EDICION-->
-    <dialog class="modal modal--form" id="modal-form"></dialog>
+    <dialog class="modal modal--form" id="modal-form">
+      <img id="modal-form-close" src="./assets/icons/close-circle.svg" alt="cerrar ventana">
+      <div id="modal-form-body"></div>
+      <div class="buttons-centered">
+        <button class="btn" id="modal-form-submit" data-action="save" type="button">Guardar</button>
+      </div>
+    </dialog>
     <!-- MODAL PARA CONFIRMACION DE BORRADOS-->
     <dialog class="modal modal--confirmation" id="modal-confirmation">
       <p id="modal-confirmation-msg"></p>
@@ -23,23 +30,18 @@
       </div>
     </dialog>
     <!-- SECCION TAREAS -->
-    <section id="tasks">
+    <section id="tasks-section">
       <div id="tasks-active-container" hidden></div>
       <div id="tasks-list-container">
         <h2>Lista de Tareas</h2>
-        <ul id="tasks-list">
-          <li class="task-card">una tarea</li>
-          <li class="task-card">una tarea</li>
-          <li class="task-card">una tarea</li>
-        </ul>
-        <footer>+ Crear tarea</footer>
+        <ul id="tasks-list"></ul>
+        <footer id="task-new">+ Crear tarea</footer>
       </div>
     </section>
   </main>
   <footer>
     <p>J.J. Desing 2026</p>
     <!-- BOTON TEMPORAL PARA ABRIR EL FORMULARIO Y AÑADIR PERSONAS PARA PRUEBAS-->
-    <button type="button" id="btn-open-form">Abrir formulario</button>
     <button type="button" id="btn-open-modal">Abrir modal</button>
   </footer>
 </body>
