@@ -38,14 +38,31 @@ export class TaskController{
   };
 
   async handleClickEvent(e){
-    const id = e.target.closest('.task-card')?.dataset.id;
-    if (id){
-      console.log(await this.getTaskById(id));
+    const action=e.target.closest('[data-action]')?.dataset.action;
+    const data = e.target.closest('.task-card')?.dataset.id;
+    if (!action){
+      return;
+    }
+    if (data){
+      console.log(await this.getTaskById(data));
+    }
+    //CRUD de tareas
+    switch (action){
+      case 'create':
+        TasksView.openModal();
+        break;
+      case 'edit':
+        console.log('editando tarea');
+        TasksView.openModal(data);
+        break;
+      case 'delete':
+        console.log('delete Task');
+        break;
+      case 'finish':
+        console.log('tarea finished');
+        break;
     }
 
-    if (e.target.id==="task-new"){
-      TasksView.openModal();
-    }
   }
 
   addEventListeners(){

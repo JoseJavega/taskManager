@@ -4,7 +4,6 @@ export class Modal {
     const modal = document.getElementById('modal-form');
     const modalFormBody = document.querySelector('#modal-form-body');
     const submitBtn = document.getElementById('modal-form-submit');
-    // const cancelBtn = document.getElementById('modal-form-cancel');
     const closeIcon = document.getElementById('modal-form-close');
 
     // cancelBtn.onclick = () => modal.close();
