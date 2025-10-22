@@ -17,7 +17,6 @@ export class Modal {
       }
       //lee los campos del formulario
       const formData = Object.fromEntries(new FormData(form));
-      console.log(formData);
       //custon event para general el evento
       const event = new CustomEvent('modal:confirm', {
         detail: { type, data: formData }

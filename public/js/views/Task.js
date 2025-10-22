@@ -2,10 +2,22 @@ import { Modal } from "../controllers/Modal.js";
 import { formatDate } from "../helpers/format_date.js";
 
 export class TasksView{
+
+  static resetTasksList(){
+    const taskContainer=document.getElementById('tasks-list');
+    if (!taskContainer) return;
+    taskContainer.innerHTML='';
+  };
+
   static dateString(dateValues){
     if (!dateValues){ return };
     const date= `${dateValues.day}-${dateValues.month}-${dateValues.year} a las ${dateValues.hour}:${dateValues.minutes} horas`;
     return date;
+  };
+
+  static deleteCard(id){
+    const taskCard = document.querySelector(`[data-id="${id}"]`);
+    if (taskCard) taskCard.remove();
   }
 
   static renderCard(input){

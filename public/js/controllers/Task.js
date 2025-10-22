@@ -9,6 +9,7 @@ export class TaskController{
   async init(){
     const tasks = await this.getTasks();
     if (tasks){
+      TasksView.resetTasksList();
       tasks.forEach(element => {
         TasksView.renderCard(element);
       });
@@ -37,14 +38,43 @@ export class TaskController{
     };
   };
 
+  async saveTask(data) {
+    try {
+      const result = await fetch(this.apiClient, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: data.title,
+          description: data.description
+        })
+      });
+
+      const newTask= await result.json()
+      TasksView.renderCard(newTask);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async deleteTask(id){
+    try {
+      await fetch(`${this.apiClient}/${id}`,{
+        method: 'DELETE'
+      });
+     console.log('Task deleted');
+
+    } catch (error) {
+
+    }
+  }
+
   async handleClickEvent(e){
     const action=e.target.closest('[data-action]')?.dataset.action;
     const data = e.target.closest('.task-card')?.dataset.id;
     if (!action){
       return;
-    }
-    if (data){
-      console.log(await this.getTaskById(data));
     }
     //CRUD de tareas
     switch (action){
@@ -56,7 +86,8 @@ export class TaskController{
         TasksView.openModal(data);
         break;
       case 'delete':
-        console.log('delete Task');
+        this.deleteTask(data);
+        TasksView.deleteCard(data);
         break;
       case 'finish':
         console.log('tarea finished');
@@ -73,7 +104,7 @@ export class TaskController{
       const { type, data } = event.detail;
       if (type !== 'task') return; // ignorar otros tipos de modales
       // Aquí recibes los datos del formulario
-      console.log('Datos de tarea:', data);
+      this.saveTask(data);
     });
   }
 
