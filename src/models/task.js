@@ -19,14 +19,23 @@ export class TaskModel {
     if (!taskExists){ return null; };
 
     // lee los datos del input y se guardan en inputData
-    const {title, description,completed, createdAt, updatedAt} = input;
-    const inputData = {title, description,completed, createdAt, updatedAt};
+    const {title, description,completed, createdAt, updatedAt, finishedAt} = input;
+    const inputData = {title, description,completed, createdAt, updatedAt, finishedAt};
     // inputData trae campos undefined que sobre escribirian los de la task al hacer el merge
     // Object.entries(inputData) -> combierte el objeto inputData en array tipo [["name", "Ana"], ["age", 30]] para poder filtrarlo
     // Object.fromEntries(array) -> combierte un array como el anterior, nuevamente en objeto
     const cleanInputData = Object.fromEntries( Object.entries(inputData).filter(([_, value]) => value !== undefined) );
     //añadimos siempre updatedAt
     cleanInputData.updatedAt = new Date().toISOString();
+
+    // revisamos si cambia el estado de completed y actualizamos finishedAt
+    if ('completed' in cleanInputData) {
+      const newCompleted = cleanInputData.completed;
+      const oldCompleted = !!taskExists.completed; // la doble !! convierte a boolean
+
+      if ( oldCompleted===false && newCompleted===true ) { cleanInputData.finishedAt = new Date().toISOString(); }
+      if ( oldCompleted===true && newCompleted===false ){ delete taskExists.finishedAt }
+    }
 
     const updatedTask = await taskExists.update( cleanInputData ).save();
 
