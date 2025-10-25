@@ -24,8 +24,8 @@ export class TaskController{
     if (validate.error){
       res.status(400).json(validate.error);
     }
-    const newTask = await TaskModel.create({input: validate.data});
-    res.status(200).json(newTask);
+    const newTask = TaskModel.create({input: validate.data});
+    res.status(201).json(newTask);
   };
 
   static async delete (req, res){
