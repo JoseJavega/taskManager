@@ -2,7 +2,7 @@
 :root {
   --color-bg: #dadbddf0;
   --color-primary: #2f3640;
-  --color-secondary: #718093;
+  --color-secondary: #8793a3;
   --color-accent: #00a8ff;
   --color-btn-save: #318c2c;
   --color-danger: #e84118;
@@ -37,29 +37,51 @@ body {
   flex-direction: column;
 }
 
-dialog{
-  background-color: var(--color-secondary);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
 /* === MODALS === */
 .modal {
+  background-color: var(--color-secondary);
   border: none;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 10px;
   width: 90%;
   max-width: 400px;
-}
 
-.modal--confirmation {
-  background-color: var(--color-white);
+  h2{
+    display: block;
+    text-align: center;
+  }
 }
 
 .buttons-centered {
   display: flex;
   justify-content: space-around;
+}
+
+#modal-confirmation-body{
+  h2{
+    margin-bottom: 15px;
+  }
+  p{
+    text-align: center;
+  }
+  #task-data{
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+}
+
+#modal-form-close{
+  width: 5%;
+  height: auto;
+  position: absolute;
+  top:10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+#modal-form-close:hover{
+  opacity: 0.6;
 }
 
 /* === HEADER === */
@@ -100,23 +122,6 @@ main {
   font-weight: bold;
 }
 
-#modal-form h2{
-  display: block;
-  text-align: center;
-}
-
-#modal-form-close{
-  width: 5%;
-  height: auto;
-  position: absolute;
-  top:10px;
-  right: 10px;
-  cursor: pointer;
-}
-
-#modal-form-close:hover{
-  opacity: 0.6;
-}
 
 /* === TASKS SECTION === */
 #tasks {
@@ -206,12 +211,22 @@ main {
     transition: background-color var(--transition);
   }
 
-  .completed img{
-    background-color: var(--color-btn-save);
+  .completed{
+    background-color: var(--color-secondary);
+
+    .btn_crud--finish img{
+      background-color: var(--color-btn-save);
+    }
+
+    .task-text{
+      text-decoration:line-through;
+    }
   }
 
   .substring{
-    display: block;
+    display: flex;
+    flex-direction: row;
+    gap:15px;
     font-size: var(--font-size-small);
     font-style: italic;
     font-weight: lighter;
@@ -227,15 +242,6 @@ main {
     border: none;
     text-align: center;
   }
-
-}
-
-
-
-
-
-
-#task-new{
 
 }
 
@@ -311,19 +317,20 @@ footer {
 }
 
 .btn[data-action="cancel"] {
-  background-color: var(--color-secondary);
+  background-color: var(--color-primary);
 }
 
 .btn[data-action="cancel"]:hover {
-  background-color: #5f6a7d;
+  opacity: 0.6;
 }
 
 .btn[data-action="confirm"] {
   background-color: var(--color-danger);
+  opacity: 0.7;
 }
 
 .btn[data-action="confirm"]:hover {
-  background-color: var(--color-danger);
+  opacity: 1;
 }
 
 .btn[data-action="save"] {

@@ -37,9 +37,9 @@ export class TaskModel {
       if ( oldCompleted===true && newCompleted===false ){ delete taskExists.finishedAt }
     }
 
-    const updatedTask = await taskExists.update( cleanInputData ).save();
-
-    return updatedTask;
+    await taskExists.update( cleanInputData ).save();
+    const fullTask = await this.getById(taskId);
+    return fullTask;
   };
 
   static async delete(taskId){
