@@ -128,9 +128,7 @@ export class TaskController{
       if (action==='update') { this.updateTask(data) };
       if (action==='delete') {
         const deleted = await this.deleteTask(data.id)
-        if (deleted) {
-          console.log('task deleted: ' + deleted);
-          TasksView.deleteCard(deleted); };
+        if (deleted) { TasksView.deleteCard(deleted); };
       };
   };
 

@@ -45,7 +45,8 @@ export class TasksView{
   }
 
   static renderCard(input){
-    const taskContainer=document.getElementById('tasks-list');
+    const taskList=document.getElementById('tasks-list');
+    const taskCompletedList=document.getElementById('tasks-completed-list');
     const taskCard = document.createElement('li');
     const createdAt = this.dateString(formatDate(input.createdAt) );
     const updatedAtValues = this.dateString(formatDate(input.updatedAt) );
@@ -54,10 +55,9 @@ export class TasksView{
     const updatedTxt = updatedAtValues ? `última actualización: ${updatedAtValues}` : '';
     const finishedTxt = finishedAtValues ? `finalizado: ${finishedAtValues}` : '';
 
-    const taskCompleted= !!input.completed;
+    const taskCompleted = !!input.completed;
 
     taskCard.classList.add('task-card');
-    if (taskCompleted){ taskCard.classList.add('completed') };
     taskCard.dataset.id = input._id;
 
     taskCard.innerHTML=`
@@ -79,7 +79,13 @@ export class TasksView{
           <spam id='task_finished'>${finishedTxt}</spam>
       </div>
       `;
-    taskContainer.appendChild(taskCard);
+
+    if (taskCompleted){
+      taskCard.classList.add('completed');
+      taskCompletedList.appendChild(taskCard);
+    }else{
+      taskList.appendChild(taskCard);
+    }
   };
 
   static openModal(data){
