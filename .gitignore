@@ -5,6 +5,7 @@ node_modules/
 .env
 
 # directorios varios
+public/js/tests/
 src/requests/
 context/
 
