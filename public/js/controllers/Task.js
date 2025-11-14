@@ -1,16 +1,21 @@
 import { TasksView } from "../views/Task.js";
+import { sortCollection } from "../utils/sortCollection.js";
 
 export class TaskController{
   constructor(apiUrl, containerId){
     this.apiClient= `${apiUrl}/tasks`;
     this.container = document.getElementById(containerId);
+    this.sortBy = 'title';
+    this.sortDirection= 'asc';
   }
 
   async init(){
     const tasks = await this.getTasks();
     if (tasks){
+      console.log(tasks);
       TasksView.resetTasksList();
-      tasks.forEach(element => {
+      const orderTasks = sortCollection(tasks,this.sortBy,this.sortDirection);
+      orderTasks.forEach(element => {
         TasksView.renderCard(element);
       });
     }
