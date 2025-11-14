@@ -1,6 +1,6 @@
 import { Modal } from "../controllers/Modal.js";
 import { ModalConfirmation } from "../controllers/Modal.js";
-import { formatDate } from "../helpers/format_date.js";
+import { formatDate } from "../utils/formatDate.js";
 
 export class TasksView{
 
@@ -17,6 +17,8 @@ export class TasksView{
   };
 
   static updateCard(data){
+    const taskList=document.getElementById('tasks-list');
+    const taskCompletedList=document.getElementById('tasks-completed-list');
     const taskCard = document.querySelector(`[data-id="${data._id}"]`);
     if (!taskCard) { return }
 
@@ -26,13 +28,18 @@ export class TasksView{
       taskCard.querySelector('#task_updated').textContent = 'última actualización: ' + this.dateString(formatDate(data.updatedAt) );
     }
 
+    const oldStateCompleted = taskCard.classList.contains('completed') === true;
     const dataCompleted = !!data.completed;
+    if ( oldStateCompleted === dataCompleted ) { return }
+
     if (dataCompleted){
       taskCard.classList.add('completed');
       taskCard.querySelector('#task_finished').textContent = 'finalizado: ' + this.dateString(formatDate(data.finishedAt) );
+      taskCompletedList.prepend(taskCard);
     }else {
       taskCard.classList.remove('completed');
       taskCard.querySelector('#task_finished').textContent = '';
+      taskList.prepend(taskCard);
     }
 
   }
