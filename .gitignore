@@ -5,5 +5,12 @@ node_modules/
 .env
 
 # directorios varios
+public/js/tests/
 src/requests/
 context/
+
+# scripts y .md de control de resumen de cambios y log de progreso
+add-progres-sesion-log.ps1
+git-resumen-commits-por-dia.ps1
+resumen-cambios.md
+progreso-log.md

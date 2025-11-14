@@ -6,49 +6,49 @@ export class TaskController{
   static async getAll (req, res){
     // TO DO - opciones de parametros de filtrado
     const tasks= await TaskModel.getAll();
-    return res.status(200).json(tasks);
+    res.status(200).json(tasks);
   };
 
   static async getById (req, res){
     const { id } = req.params;
     const task = await TaskModel.getById(id);
     if (!task){
-      return res.status(404).json({message: 'Task not found'});
+      res.status(404).json({message: 'Task not found'});
     };
 
-    return res.status(200).json(task);
+    res.status(200).json(task);
   };
 
   static async create (req, res){
     const validate= validateTask(req.body);
     if (validate.error){
-      return res.status(400).json(validate.error);
+      res.status(400).json(validate.error);
     }
-    const newTask = await TaskModel.create({input: validate.data});
-    return res.status(200).json(newTask);
+    const newTask = TaskModel.create({input: validate.data});
+    res.status(201).json(newTask);
   };
 
   static async delete (req, res){
     const { id } = req.params;
     const result = await TaskModel.delete(id);
     if (result===false){
-      return res.status(404).json({message:'Task not found'});
+      res.status(404).json({message:'Task not found'});
     }
-    return res.status(204).json({message:`Task deleted id:${result}`});
+    res.status(204).end();
   };
 
   static async update(req,res){
     const validate = validatePartialTask(req.body);
     if (validate.error){
-      return res.status(400).json({error: 'Datos no validos o incompletos'});
+      res.status(400).json({error: 'Datos no validos o incompletos'});
     };
 
     const { id } = req.params;
     const updatedTask = await TaskModel.update(id, validate.data);
     if (!updatedTask){
-      return res.status(404).json({message: 'Task not found'});
+      res.status(404).json({message: 'Task not found'});
     };
-    return res.status(200).json(updatedTask);
+    res.status(200).json(updatedTask);
   };
 
 }

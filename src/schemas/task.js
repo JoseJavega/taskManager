@@ -9,6 +9,9 @@ const taskSchema = z.object({
   }),
   updatedAt: z.string().optional().refine(v => !v || !isNaN(Date.parse(v)), {
     message: "Invalid date format updateAt"
+  }),
+    finishedAt: z.string().optional().refine(v => !v || !isNaN(Date.parse(v)), {
+    message: "Invalid date format finishedAt"
   })
 });
 
