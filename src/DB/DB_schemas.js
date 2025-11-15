@@ -10,7 +10,8 @@ export const Tasks = Schema('tasks',{
   completed: { type : Boolean, default:false},
   createdAt: { type: String, required: true},
   updatedAt: { type: String},
-  finishedAt: { type: String}
+  finishedAt: { type: String},
+  categoryId: { type: String}
 });
 
 export const TaskCategories = Schema('taskCategories',{
