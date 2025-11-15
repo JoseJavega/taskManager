@@ -12,3 +12,8 @@ export const Tasks = Schema('tasks',{
   updatedAt: { type: String},
   finishedAt: { type: String}
 });
+
+export const TaskCategories = Schema('taskCategories',{
+  _id: { type: String, required: true},
+  name:  { type: String, required: true}
+});
