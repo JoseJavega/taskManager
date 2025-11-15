@@ -8,7 +8,8 @@ export class TaskModel {
       _id: randomUUID(),
       title: input.title,
       description: input.description,
-      createdAt: new Date().toISOString()
+      categoryId: input.categoryId,
+      createdAt: new Date().toISOString(),
     };
     Tasks.create(newTask).save();
     return newTask;
@@ -19,8 +20,8 @@ export class TaskModel {
     if (!taskExists){ return null; };
 
     // lee los datos del input y se guardan en inputData
-    const {title, description,completed, createdAt, updatedAt, finishedAt} = input;
-    const inputData = {title, description,completed, createdAt, updatedAt, finishedAt};
+    const {title, description,categoryId, completed, createdAt, updatedAt, finishedAt} = input;
+    const inputData = {title, description, categoryId, completed, createdAt, updatedAt, finishedAt};
     // inputData trae campos undefined que sobre escribirian los de la task al hacer el merge
     // Object.entries(inputData) -> combierte el objeto inputData en array tipo [["name", "Ana"], ["age", 30]] para poder filtrarlo
     // Object.fromEntries(array) -> combierte un array como el anterior, nuevamente en objeto
@@ -55,6 +56,9 @@ export class TaskModel {
   }
 
   static async getAll(filters={}){
-    return await Tasks.find();
+    const query={};
+    if (filters.categoryId) { query.categoryId = filters.categoryId; }
+
+    return await Tasks.find(query);
   }
 }
