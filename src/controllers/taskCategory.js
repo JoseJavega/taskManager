@@ -1,10 +1,11 @@
 import { TaskCategoryModel } from "../models/taskCategory.js";
 import { validateTaskCategory } from "../schemas/taskCategory.js";
+import { TaskCategoryService } from "../services/taskCategory.js";
 
 export class TaskCategoryController{
   static async getAll (req, res){
     const categories = await TaskCategoryModel.getAll();
-    res.staatus(200).json(categories);
+    res.status(200).json(categories);
   };
 
   static async getById (req, res){
@@ -27,7 +28,10 @@ export class TaskCategoryController{
 
   static async delete (req, res){
     const { id } = req.params;
-    const result = await TaskCategoryModel.delete(id);
+    const result = await TaskCategoryService.deleteCategory(id);
+    if (result===null){
+      res.status(409).json({message:'Category has tasks asigned'});
+    };
     if (result===false){
       res.status(404).json({message:'Category not found'});
     }

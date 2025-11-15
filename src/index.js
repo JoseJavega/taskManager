@@ -5,6 +5,7 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { tasksRouter } from './routes/tasks.js';
+import { taskCategoriesRouter } from './routes/taskCategories.js';
 import { corsMiddleware } from './middlewares/cors.js';
 
 const app=express();
@@ -18,8 +19,9 @@ const __dirname = path.dirname(__filename);
 // permite a express servir directamente los archivos estáticos de public
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-// TASKS
+// ROUTES
 app.use('/api/tasks',tasksRouter);
+app.use('/api/taskCategory',taskCategoriesRouter);
 
 // Ruta general para servir index.html a todas las rutas que no coincidan antes
 app.use((req, res) => {
