@@ -1,8 +1,10 @@
 # Dependencias
 node_modules/
 
-# Archivos de entorno y configuración local
+# Archivos de entorno, configuración local y DB-local
 .env
+src/DB/tasks.json
+src/DB/taskCategories.json
 
 # directorios varios
 public/js/tests/
