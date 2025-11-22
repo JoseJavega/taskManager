@@ -1,21 +1,35 @@
 import { TasksView } from "../views/Task.js";
 import { TaskService } from "../services/Task.js";
+import { TaskCategoryService } from "../services/TaskCategory.js";
 import { sortCollection } from "../utils/sortCollection.js";
 
 export class TaskController{
   constructor(apiUrl, containerId){
     this.taskService = new TaskService (apiUrl);
+    this.taskCategoryService = new TaskCategoryService (apiUrl);
     this.container = document.getElementById(containerId);
-    this.sortBy = 'title';
-    this.sortDirection= 'asc';
+    // Ordenación de tareas
+    this.sortTasksBy = 'title';
+    this.sortTasksDirection = 'asc';
+    // Ordenación de categorías
+    this.sortCategoriesBy = 'name';
+    this.sortCategoriesDirection = 'asc';
   }
 
   async init(){
+    TasksView.resetTasksList();
+    const categories = await this.taskCategoryService.getAll();
+    if (categories){
+      const orderCategories = sortCollection(categories, this.sortCategoriesBy, this.sortCategoriesDirection);
+      orderCategories.push({_id: 'uncategorized', name: 'Sin categoría'});
+      orderCategories.forEach(element => {
+        TasksView.renderCategory(element);
+      });
+    }
+
     const tasks = await this.taskService.getAll();
     if (tasks){
-      console.log(tasks);
-      TasksView.resetTasksList();
-      const orderTasks = sortCollection(tasks,this.sortBy,this.sortDirection);
+      const orderTasks = sortCollection(tasks, this.sortTasksBy, this.sortTasksDirection);
       orderTasks.forEach(element => {
         TasksView.renderCard(element);
       });

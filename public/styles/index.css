@@ -132,7 +132,7 @@ main {
 }
 
 #tasks-active-container,
-#tasks-list-container {
+#tasks-container {
   background-color: var(--color-white);
   border: 1px solid var(--color-secondary);
   border-radius: var(--radius);
@@ -140,13 +140,44 @@ main {
   box-shadow: var(--shadow);
 }
 
-#tasks-list-container{
+#tasks-container{
   ul{
     margin-top: var(--spacing);
   }
 
   h2{
     text-align: center;
+  }
+
+
+
+  .btn-task-new{
+    width: 100%;
+    padding: var(--spacing);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    border: none;
+    text-align: center;
+  }
+
+}
+
+.category-container{
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--spacing);
+
+  h2{
+    text-align: left;
+    font-style: italic;
+    font-size: 1rem;
+  }
+
+  ul{
+    width: 100%;
   }
 
   .task-card {
@@ -237,17 +268,6 @@ main {
     font-size: var(--font-size-small);
     font-style: italic;
     font-weight: lighter;
-  }
-
-  .btn-task-new{
-    width: 100%;
-    padding: var(--spacing);
-    background-color: var(--color-primary);
-    color: var(--color-white);
-    border-radius: var(--radius-small);
-    cursor: pointer;
-    border: none;
-    text-align: center;
   }
 
 }
@@ -392,9 +412,8 @@ footer {
     gap: 2rem;
   }
 
-  #tasks__active,
-  #tasks__list {
-    flex: 1;
+  #tasks-active-container,
+  #tasks-list {
     min-height: 250px;
   }
 

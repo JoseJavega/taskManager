@@ -16,25 +16,32 @@ export class TasksView{
     return date;
   };
 
-  static updateCard(data){
-    const taskList=document.getElementById('tasks-list');
-    const taskCompletedList=document.getElementById('tasks-completed-list');
-    const taskCard = document.querySelector(`[data-id="${data._id}"]`);
+  static updateCard(input){
+    const taskCard = document.querySelector(`[data-id="${input._id}"]`);
     if (!taskCard) { return }
 
-    taskCard.querySelector('#task_title').textContent = data.title +": ";
-    taskCard.querySelector('#task_description').textContent = data.description ?? '';
-    if (data.updatedAt){
-      taskCard.querySelector('#task_updated').textContent = 'última actualización: ' + this.dateString(formatDate(data.updatedAt) );
+    //DIV de la categoria
+    const categoryContainer = input.categoryId ?
+      document.querySelector(`[id="${input.categoryId}"]`) :
+      document.querySelector('#uncategorized');
+    //listas de tareas
+    const taskList = categoryContainer.querySelector('.tasks-list');
+    const taskCompletedList = categoryContainer.querySelector('.tasks-list-completed');
+
+
+    taskCard.querySelector('#task_title').textContent = input.title +": ";
+    taskCard.querySelector('#task_description').textContent = input.description ?? '';
+    if (input.updatedAt){
+      taskCard.querySelector('#task_updated').textContent = 'última actualización: ' + this.dateString(formatDate(input.updatedAt) );
     }
 
     const oldStateCompleted = taskCard.classList.contains('completed') === true;
-    const dataCompleted = !!data.completed;
+    const dataCompleted = !!input.completed;
     if ( oldStateCompleted === dataCompleted ) { return }
 
     if (dataCompleted){
       taskCard.classList.add('completed');
-      taskCard.querySelector('#task_finished').textContent = 'finalizado: ' + this.dateString(formatDate(data.finishedAt) );
+      taskCard.querySelector('#task_finished').textContent = 'finalizado: ' + this.dateString(formatDate(input.finishedAt) );
       taskCompletedList.prepend(taskCard);
     }else {
       taskCard.classList.remove('completed');
@@ -45,15 +52,20 @@ export class TasksView{
   }
 
   static deleteCard(id){
-    const taskList = document.getElementById('tasks-list');
-    const taskCard = taskList.querySelector(`[data-id="${id}"]`);
-
+   // const taskList = document.getElementById('task-categories-container');
+    const taskCard = document.querySelector(`[data-id="${id}"]`);
     if (taskCard) taskCard.remove();
   }
 
   static renderCard(input){
-    const taskList=document.getElementById('tasks-list');
-    const taskCompletedList=document.getElementById('tasks-completed-list');
+    //DIV de la categoria
+    const categoryContainer = input.categoryId ?
+      document.querySelector(`[id="${input.categoryId}"]`) :
+      document.querySelector('#uncategorized');
+    //listas de tareas
+    const taskList = categoryContainer.querySelector('.tasks-list');
+    const taskCompletedList = categoryContainer.querySelector('.tasks-list-completed');
+
     const taskCard = document.createElement('li');
     const createdAt = this.dateString(formatDate(input.createdAt) );
     const updatedAtValues = this.dateString(formatDate(input.updatedAt) );
@@ -140,6 +152,23 @@ export class TasksView{
       <p id='task-data' data-id="${data._id}">${data.title}</p> `;
 
     ModalConfirmation.open('task', 'delete', modalFormBody);
+  }
+
+  // CATEGORIES
+  static renderCategory (input) {
+    const mainContainer = document.getElementById('task-categories-container');
+    const categoryContainer = document.createElement('div');
+
+    categoryContainer.classList.add('category-container');
+    categoryContainer.id = input._id
+
+    categoryContainer.innerHTML=`
+      <H2>${input.name}</H2>
+      <ul class='tasks-list'></ul>
+      <ul class='tasks-list-completed'></ul>
+    `;
+
+    mainContainer.appendChild(categoryContainer);
   }
 }
 
