@@ -54,6 +54,8 @@ export class TaskService {
   async update(data){
     if (!data.id) { return }
     const taskCompleted = data.finished==='on'? true : false;
+    const categoryId = data.categoryId==='none'? '' : data.categoryId;
+
     try {
       const result = await fetch(`${this.apiClient}/${data.id}`, {
         method: 'PATCH',
@@ -63,7 +65,8 @@ export class TaskService {
         body: JSON.stringify({
           title: data.title,
           description: data.description,
-          completed: taskCompleted
+          completed: taskCompleted,
+          categoryId: categoryId
         })
       });
 

@@ -78,7 +78,11 @@ export class TaskController{
       };
       if (action==='update') {
         const updatedTask = await this.taskService.update(data)
-        if (updatedTask) { TasksView.updateCard(updatedTask); }
+        if (updatedTask) {
+          TasksView.deleteCard(updatedTask._id);
+          TasksView.renderCard(updatedTask);
+          //TasksView.updateCard(updatedTask);
+          }
       };
       if (action==='delete') {
         const deleted = await this.taskService.delete(data.id)
