@@ -18,14 +18,12 @@ export class TaskController{
 
   async init(){
     TasksView.resetTasksList();
-    const categories = await this.taskCategoryService.getAll();
+    const categories = await this.getPreparedCategory();
     if (categories){
-      const orderCategories = sortCollection(categories, this.sortCategoriesBy, this.sortCategoriesDirection);
-      orderCategories.push({_id: 'uncategorized', name: 'Sin categoría'});
-      orderCategories.forEach(element => {
+      categories.forEach(element => {
         TasksView.renderCategory(element);
       });
-    }
+    };
 
     const tasks = await this.taskService.getAll();
     if (tasks){
@@ -38,6 +36,15 @@ export class TaskController{
     this.addEventListeners();
   };
 
+  // lectura de las categorias, ordenado y añadida "Sin Categoría" al principio
+  async getPreparedCategory(){
+    const categories = await this.taskCategoryService.getAll();
+    if (!categories) return null;
+    const orderCategories = sortCollection(categories, this.sortCategoriesBy, this.sortCategoriesDirection);
+    orderCategories.unshift({_id: 'uncategorized', name: 'Sin categoría'});
+    return orderCategories;
+  };
+
   // Manejador de eventos de clicks en la ventana de tareas
   async handleClickEvent(e){
     const action=e.target.closest('[data-action]')?.dataset.action;
@@ -48,12 +55,10 @@ export class TaskController{
     //CRUD de tareas
     switch (action){
       case 'create':
-        const categoryList = await this.taskCategoryService.getAll();
-        categoryList.unshift({_id:'none', name:'Sin Categoría'});
-        TasksView.openModal(categoryList);
+        TasksView.openModal( await this.getPreparedCategory() );
         break;
       case 'edit':
-        TasksView.openModal(await this.taskCategoryService.getAll() , await this.taskService.getById(taskId) );
+        TasksView.openModal( await this.getPreparedCategory() , await this.taskService.getById(taskId) );
         break;
       case 'delete':
         TasksView.openModalConfirmation( await this.taskService.getById(taskId) );
@@ -62,7 +67,8 @@ export class TaskController{
         const isCompleted = taskCard.classList.contains('completed');
         const data = { id:taskId, finished: isCompleted ? '' : 'on' }
         const updatedTask = await this.taskService.update(data);
-        TasksView.updateCard(updatedTask);
+        TasksView.deleteCard(updatedTask._id);
+        TasksView.renderCard(updatedTask);
         break;
     };
   };
@@ -81,7 +87,6 @@ export class TaskController{
         if (updatedTask) {
           TasksView.deleteCard(updatedTask._id);
           TasksView.renderCard(updatedTask);
-          //TasksView.updateCard(updatedTask);
           }
       };
       if (action==='delete') {

@@ -17,42 +17,7 @@ export class TasksView{
     return date;
   };
 
-  static updateCard(input){
-    const taskCard = document.querySelector(`[data-id="${input._id}"]`);
-    if (!taskCard) { return }
-
-    //DIV de la categoria
-    const categoryContainer = input.categoryId ?
-      document.querySelector(`[id="${input.categoryId}"]`) :
-      document.querySelector('#uncategorized');
-    //listas de tareas
-    const taskList = categoryContainer.querySelector('.tasks-list');
-    const taskCompletedList = categoryContainer.querySelector('.tasks-list-completed');
-
-
-    taskCard.querySelector('#task_title').textContent = input.title +": ";
-    taskCard.querySelector('#task_description').textContent = input.description ?? '';
-    if (input.updatedAt){
-      taskCard.querySelector('#task_updated').textContent = 'última actualización: ' + this.dateString(formatDate(input.updatedAt) );
-    }
-
-    const oldStateCompleted = taskCard.classList.contains('completed') === true;
-    const dataCompleted = !!input.completed;
-    if ( oldStateCompleted === dataCompleted ) { return }
-
-    if (dataCompleted){
-      taskCard.classList.add('completed');
-      taskCard.querySelector('#task_finished').textContent = 'finalizado: ' + this.dateString(formatDate(input.finishedAt) );
-      taskCompletedList.prepend(taskCard);
-    }else {
-      taskCard.classList.remove('completed');
-      taskCard.querySelector('#task_finished').textContent = '';
-      taskList.prepend(taskCard);
-    }
-
-  }
-
-  static deleteCard(id){
+ static deleteCard(id){
    // const taskList = document.getElementById('task-categories-container');
     const taskCard = document.querySelector(`[data-id="${id}"]`);
     if (taskCard){ taskCard.remove() };
