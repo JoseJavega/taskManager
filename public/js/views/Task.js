@@ -1,6 +1,7 @@
 import { Modal } from "../controllers/Modal.js";
 import { ModalConfirmation } from "../controllers/Modal.js";
 import { formatDate } from "../utils/formatDate.js";
+import { dinamicSelect } from "../utils/dinamicSelect.js";
 
 export class TasksView{
 
@@ -107,49 +108,56 @@ export class TasksView{
     }
   };
 
-  static openModal(data){
+  static openModal(dataCategory,dataTask){
     let action = 'create';
     let h2= 'NUEVA TAREA';
-    let inputId='', titleData='', descriptionData='', finishedData = '';
+    let inputId='', inputTitle='', inputDescription='', inputFinished = '', inputCategory='';
 
-    if (data){
+    if (dataTask){
       action = 'update';
       h2 = 'ACTUALIZAR TAREA';
-      titleData = data.title;
-      descriptionData = data.description;
+      inputTitle = dataTask.title;
+      inputDescription = dataTask.description;
       // input hidden para pasar el id de task
-      inputId=`<input type="text" id="task-id" name="id" value ="${data._id}" hidden>`;
-      if (data.completed){ finishedData = 'checked' };
+      inputId=`<input type="text" id="task-id" name="id" value ="${dataTask._id}" hidden>`;
+      if (dataTask.completed){ inputFinished = 'checked' };
+      inputCategory = dataTask.categoryId;
     }
 
     const modalFormBody=`
       <form class="form-task">
         <H2>${h2}</H2>
         ${inputId}
-        <div class"form-group, form-group--column">
+        <div class="form-group form-group--column">
           <label for="task-name">Título:</label>
-          <input type="text" id="task-name" name="title" value ="${titleData}" placeholder="Tu próxima tarea" maxlength="25" required>
+          <input type="text" id="task-name" name="title" value ="${inputTitle}" placeholder="Tu próxima tarea" maxlength="25" required>
         </div>
-        <div class"form-group, form-group--column">
+        <div class="form-group form-group--column">
           <label for="task-description">Descripción:</label>
-          <textarea type="text" id="task-description" name="description" placeholder="Qué tienes que hacer" maxlength="40" required>${descriptionData}</textarea>
+          <textarea type="text" id="task-description" name="description" placeholder="Qué tienes que hacer" maxlength="40" required>${inputDescription}</textarea>
         </div>
-        <div class"form-group, form-group--row">
-          <input class="inline" type="checkbox" id="task-finish" name="finished" ${finishedData}>
-          <label class="inline" for="task-finish">Finished</label>
+        <div class="form-group form-group--row">
+          <div class="inline">
+            <label class="inline" for="task-finish">Finished</label>
+            <input class="inline" type="checkbox" id="task-finish" name="finished" ${inputFinished}>
+          </div>
+          <div class="inline">
+            <label class="inline" for="task-category">Categoría</label>
+            <select name="categoryId" id="task-category">${dinamicSelect(dataCategory)}</select>
+          </div>
         </div>
       </form>
     `
     Modal.open('task', action, modalFormBody);
   }
 
-  static openModalConfirmation(data){
-    if (!data){ return };
+  static openModalConfirmation(dataTask){
+    if (!dataTask){ return };
 
     const modalFormBody = `
       <H2>ELIMINAR TAREA</H2>
       <p>Se va a eliminar la tarea</p>
-      <p id='task-data' data-id="${data._id}">${data.title}</p> `;
+      <p id='task-data' data-id="${dataTask._id}">${dataTask.title}</p> `;
 
     ModalConfirmation.open('task', 'delete', modalFormBody);
   }

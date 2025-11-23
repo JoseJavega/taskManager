@@ -48,10 +48,12 @@ export class TaskController{
     //CRUD de tareas
     switch (action){
       case 'create':
-        TasksView.openModal();
+        const categoryList = await this.taskCategoryService.getAll();
+        categoryList.unshift({_id:'none', name:'Sin Categoría'});
+        TasksView.openModal(categoryList);
         break;
       case 'edit':
-        TasksView.openModal(await this.taskService.getById(taskId));
+        TasksView.openModal(await this.taskCategoryService.getAll() , await this.taskService.getById(taskId) );
         break;
       case 'delete':
         TasksView.openModalConfirmation( await this.taskService.getById(taskId) );

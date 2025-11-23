@@ -26,6 +26,10 @@ export class TaskService {
 
   async save(data) {
     if (!data) { return };
+
+    const taskCompleted = data.finished==='on'? true : false;
+    const categoryId = data.categoryId==='none'? '' : data.categoryId;
+
     try {
       const result = await fetch(`${this.apiClient}`, {
         method: 'POST',
@@ -34,7 +38,9 @@ export class TaskService {
         },
         body: JSON.stringify({
           title: data.title,
-          description: data.description
+          description: data.description,
+          completed: taskCompleted,
+          categoryId: categoryId
         })
       });
 
