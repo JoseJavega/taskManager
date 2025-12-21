@@ -18,6 +18,8 @@
 
   --line-height-body: 1.5;
   --font-size-small: 0.7em;
+
+  --header-height: 72px;
 }
 
 /* === RESETEO GLOBAL === */
@@ -35,6 +37,10 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.hidden{
+  display: none;
 }
 
 /* === MODALS === */
@@ -91,6 +97,7 @@ header {
   text-align: center;
   padding: var(--spacing);
   box-shadow: var(--shadow);
+  height: var(--header-height);
 }
 
 header h1 {
@@ -149,17 +156,49 @@ main {
     text-align: center;
   }
 
-
-
-  .btn-task-new{
+  #tasks-buttons {
     width: 100%;
-    padding: var(--spacing);
+    display: flex;
+    flex-direction: row;
+    border-radius: var(--radius-small);
     background-color: var(--color-primary);
     color: var(--color-white);
-    border-radius: var(--radius-small);
+  }
+
+  .noseButton{
+    flex-grow: 1;
+  }
+
+  .btn-task-new{
+    padding: var(--spacing);
+    background-color: inherit;
+    color: inherit;
+    border-radius: inherit;
     cursor: pointer;
     border: none;
     text-align: center;
+  }
+
+  .btn-category-control{
+    align-self: flex-end;
+    margin-left: auto;
+    background-color: inherit;
+    color: inherit;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    p{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap:5px;
+    }
+
+    img{
+      width: 18px;
+      height: 18px;
+    }
   }
 
 }
@@ -326,6 +365,39 @@ main {
 .form-group--row{
   flex-direction: row;
   justify-content: space-around;
+}
+
+/* === CATEGORIES ASIDE PANEL === */
+#categories-panel{
+  position: fixed;
+  top: var(--header-height);
+  right: 0;
+  height: 100vh;
+  width: 300px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-secondary);
+
+  header{
+    background-color: inherit;
+    height: calc(var(--header-height)/2);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: var(--color-secondary) 1px solid;
+
+    h2{
+      color: var(--color-primary);
+    }
+
+    button{
+      width: 20px;
+      height: 20px;
+      border: none;
+      background-color: transparent;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    }
 }
 
 /* === FOOTER === */

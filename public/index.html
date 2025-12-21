@@ -34,11 +34,22 @@
       <div id="tasks-active-container" hidden></div>
       <div id="tasks-container">
         <h2>Lista de Tareas</h2>
-        <button class="btn-task-new" data-action="create">+ Crear tarea</button>
+        <div id="tasks-buttons">
+          <button class="btn-task-new noseButton" data-action="create">+ Crear tarea</button>
+          <button class="btn-task-new btn-category-control" >
+            <p> <img src="./assets/icons/settings.svg" alt=""> Gestionar Categorías</p>
+          </button>
+        </div>
         <div id="task-categories-container"></div>
       </div>
     </section>
   </main>
+  <aside id="categories-panel" class="hidden">
+    <header>
+      <H2>Categorías</H2>
+      <button>X</button>
+    </header>
+  </aside>
   <footer>
     <p>J.J. Desing 2026</p>
   </footer>
