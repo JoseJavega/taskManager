@@ -79,6 +79,7 @@ export class TaskController{
       if (type !== 'task') return; // ignorar otros tipos de modales
       // Aquí recibes los datos del formulario
       if (action==='create') {
+        console.log(data);
         const createdTask = await this.taskService.save(data);
         if (createdTask) { TasksView.renderCard(createdTask); }
       };

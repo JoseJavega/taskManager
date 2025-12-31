@@ -39,10 +39,6 @@ body {
   flex-direction: column;
 }
 
-.hidden{
-  display: none;
-}
-
 /* === MODALS === */
 .modal {
   background-color: var(--color-secondary);
@@ -367,15 +363,17 @@ main {
   justify-content: space-around;
 }
 
-/* === CATEGORIES ASIDE PANEL === */
-#categories-panel{
+/* === ASIDE PANEL === */
+#aside-panel{
   position: fixed;
   top: var(--header-height);
-  right: 0;
+  right: -300px;
+  transition: none;
   height: 100vh;
   width: 300px;
   background-color: var(--color-white);
   border: 1px solid var(--color-secondary);
+  transition: right 2s linear;
 
   header{
     background-color: inherit;
@@ -397,7 +395,12 @@ main {
       font-weight: bold;
       cursor: pointer;
     }
-    }
+  }
+}
+
+.aside-visible{
+  transition: 2s ease-in;
+  transform: translateX(-300px);
 }
 
 /* === FOOTER === */

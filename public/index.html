@@ -36,7 +36,7 @@
         <h2>Lista de Tareas</h2>
         <div id="tasks-buttons">
           <button class="btn-task-new noseButton" data-action="create">+ Crear tarea</button>
-          <button class="btn-task-new btn-category-control" >
+          <button class="btn-task-new btn-category-control" id="btn-category-control">
             <p> <img src="./assets/icons/settings.svg" alt=""> Gestionar Categorías</p>
           </button>
         </div>
@@ -44,10 +44,11 @@
       </div>
     </section>
   </main>
-  <aside id="categories-panel" class="hidden">
+  <!-- ASIDE DE GESTIONES VARIAS -->
+  <aside id="aside-panel">
     <header>
-      <H2>Categorías</H2>
-      <button>X</button>
+      <H2 id="aside-header">Categorías</H2>
+      <button id="aside-icon-close">X</button>
     </header>
   </aside>
   <footer>
