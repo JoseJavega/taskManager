@@ -1,6 +1,6 @@
 import DBlocal from 'db-local';
 
-//ubicacion de la DBlocal
+// creacion de la base de datos y su ubicacion
 const { Schema } = new DBlocal ({path: './src/DB'});
 
 export const Tasks = Schema('tasks',{
