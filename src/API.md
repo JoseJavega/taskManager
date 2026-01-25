@@ -9,7 +9,7 @@ Esta documentación detalla los contratos de comunicación, modelos de datos y e
 - **Identificadores únicos (UUID):** Uso estricto de UUID v4 generado mediante `node:crypto` para todas las entidades.
 - **Formato de Fechas:** Todos los timestamps se manejan en formato ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ).
 - **Validaciones de entrada:** Se utiliza la librería ZOD para validar los datos inyectados, ignorando aquellos camnpos que no consten en el esquema.
-- * *Sanitización:* * Los String se limpian de espacios en blanco al inicio y al final ( trim ).
+- **Sanitización:** Los String se limpian de espacios en blanco al inicio y al final ( trim ).
 
 ### Gestión de Tareas
 
