@@ -1,21 +1,28 @@
-# README.md
+# Task Manager
 
 ## Descripción del Proyecto
 
-Gestor de tareas minimalista desarrollado con **Node.js + Express** y **db-local** como base de datos local. Permite crear, editar, eliminar y marcar tareas como completadas. Este MVP sienta las bases para futuras ampliaciones, incluyendo usuarios, cronometraje y roles.
+Sistema de gestión de tareas y categorías basado en una **API RESTful** construida con **Node.js** y **Express**. El proyecto utiliza la librería **db-local** para la persistencia de datos en formato JSON, eliminando la necesidad de configurar motores de base de datos externos para su despliegue inicial.
 
-## Requisitos Previos y dependencias usadas
+Diseñado bajo principios de arquitectura modular, el sistema separa la lógica de negocio de la persistencia y la presentación.
+Este MVP implementa el ciclo de vida completo de tareas y su organización jerárquica mediante categorías, sentando las bases para una futura escalabilidad hacia sistemas multiusuario y gestión de tiempos.
 
+## 🛠 Requisitos y dependencias
+
+**Entorno de ejecución**
 * Node.js >= 18
 * npm >= 9
 
-* cors: 2.8.5
-* db-local: 3.1.0
-* dotenv: 17.2.3
+**Dependencias**
 * express: 5.1.0
-* zod: 4.1.12
+* db-local: 3.1.0 -> motor de persistencia basado en archivos JSON
+* zod: 4.1.12 -> validación de esquemas y tipado en tiempo de ejecución
 
-## Instalación y Configuración
+**Utilidades y seguridad**
+* cors: 2.8.5
+* dotenv: 17.2.3
+
+## 🚀 Instalación y Configuración
 
 ```bash
 # Clonar repositorio
@@ -25,44 +32,50 @@ cd taskManager
 # Instalar dependencias
 npm install
 
-# Crear archivo .env
-PORT = 3000
+# Crear archivo .env en la raiz del proyecto
+PORT=3000
 
+# Para Iniciar en entorno de desarrollo
+npm run dev
+# Para iniciar el servidor de producción
+npm start
 ```
 
-## Estructura del Proyecto
+## 📂 Estructura del Proyecto
 
 ```
 project-root/
 │
-├── src/
-│   ├── controllers/
-│   │   └── task.js
-│   ├── DB/
-│   │   ├── DB_schemas.js     # Definición de esquemas para db-local
-│   │   └── tasks.json        # Datos persistidos de las tareas en formato json (tabla de la db-local)
-│   ├── middlewares/
-│   │   └── cors.js           # Uso de la libreria cors para la gestión de las mismas
-│   ├── models/
-│   │   └── task.js
-│   ├── routes/
-│   │   └── tasks.js
-│   ├── schemas/
-│   │   └── task.js           # Esquema de las tareas para validacion de datos usanso zod
-│   └── index.js
+├── src/                    # API Backend
+│   ├── controllers/        # Gestión de peticiones y respuestas HTTP
+│   ├── DB/                 # Persistencia de datos (esquemas de db-local y archivos JSON)
+│   ├── middlewares/        # Funciones intermedia (CORS, Auth, Logger)
+│   ├── models/             # Acceso a datos y lógica DB
+│   ├── routes/             # Rutas de entrada a la API (Endpoints)
+│   ├── schemas/            # Validacion de integridad de datos usanso ZOD
+│   ├── API.md              # API Reference
+│   └── index.js            # Punto de entrada de la API
 │
-├── public/ (frontend)
-│   ├── assets/
-│   │   ├── fonts/
-│   │   ├── icons/
-│   │   └── images/
-│   ├── styles/
-│   │   ├── index.css
-│   │   └── normalice.css
-│   └── index.html
+├── public/                 # Frontend
+│   ├── assets/             # Recursos estáticos (fuentes, iconos, imágenes)
+│   ├── js/
+│   │   ├── controllers/    # Gestión de eventos de la UI
+│   │   ├── services/       # Clientes API
+│   │   ├── test/           # Script de testeo
+│   │   ├── utils/          # Funciones auxliares
+│   │   ├── views/          # Renders de las diferenets partes de la UI
+│   │   ├── config.js       # Archivo de configuración con la ruta de la API y la cabecera para los fetch
+│   │   └── main.js         # Inicializador de la aplicación
+│   ├── styles/             # CSS modular y normalización
+│   └── index.html          # Punto de entrada de la interfaz
 │
-├── .env
-├── .gitignore
-├── package.json
-└── README.md
+├── .env                    # Configuración de variables de entorno
+├── package.json            # Dependencias y scripts
+└── README.md               # Guía general (este documento)
 ```
+
+## 📖 Documentación Detallada
+
+Para conocer los endpoints disponibles, los formatos de envío (JSON) y los códigos de respuesta, consulta la referencia técnica:
+
+👉 **[Documentación de la API](./src/API.md)**
