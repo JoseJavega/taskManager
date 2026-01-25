@@ -67,16 +67,18 @@ export class TaskModel {
     return fullTask;
   }
 
-  static async updateMany(propiedad, value, newValue) {
-    const query = { [propiedad]: value };
-    const tasksToUpdate = await Tasks.find(query);
+  static async updateMany(propiedad, values, newValue) {
+    const filterQuery = { [propiedad]: { $in: values } };
+    const tasksToUpdate = await Tasks.find(filterQuery);
     if (tasksToUpdate.length === 0) return 0;
 
     tasksToUpdate.forEach((task) => {
-      task.update({
+      task
+        .update({
           [propiedad]: newValue,
-          updatedAt: new Date().toISOString()
-        }).save();
+          updatedAt: new Date().toISOString(),
+        })
+        .save();
     });
     return tasksToUpdate.length;
   }
@@ -101,6 +103,6 @@ export class TaskModel {
       query.categoryId = filters.categoryId;
     }
 
-    return await Tasks.find(query);
+    return await Tasks.find(filters);
   }
 }

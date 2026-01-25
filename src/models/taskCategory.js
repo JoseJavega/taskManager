@@ -22,19 +22,24 @@ export class TaskCategoryModel {
     return categoryUpdated;
   }
 
-  static async delete(taskCategoryId) {
-    const categoryExists = await this.getById(taskCategoryId);
-    if (!categoryExists) return false;
+  static async delete(taskCategoriesId) {
+    const categoriesToDelete = await TaskCategories.find({"_id": {$in: taskCategoriesId}});
+    if (!categoriesToDelete) return false;
 
-    await TaskCategories.remove(taskCategoryId);
-    return taskCategoryId;
-  }
+    try {
+      categoriesToDelete.forEach( (category) => {
+        TaskCategories.remove(category._id);
+      }); 
+    } catch (error) {
+      return error;
+    };
+  };
 
   static async getById(taskCategoryId) {
     return await TaskCategories.findOne({ _id: taskCategoryId });
   }
 
   static async getAll(filters = {}) {
-    return await TaskCategories.find();
+    return await TaskCategories.find(filters);
   }
 }
