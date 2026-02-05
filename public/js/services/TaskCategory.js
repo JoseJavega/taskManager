@@ -46,9 +46,7 @@ export class TaskCategoryService {
   }
 
   async update(data) {
-    if (!data.id) {
-      return;
-    }
+    if (!data.id) return;
     try {
       const result = await fetch(`${this.apiClient}/${data.id}`, {
         method: "PATCH",
@@ -67,7 +65,25 @@ export class TaskCategoryService {
     }
   }
 
-  async delete(id) {
+  async delete(ids) {
+    if (!ids || (ids instanceof Set && ids.size === 0)) return;
+    const categoriesIds = ids instanceof Set ? [...ids] : [ids];
+    try {
+      const result = await fetch(`${this.apiClient}/delete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ categoriesIds }),
+      });
+
+      if (result.status === 204) return true;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async oldDelete(id) {
     try {
       await fetch(`${this.apiClient}/${id}`, {
         method: "DELETE",

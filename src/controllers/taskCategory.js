@@ -1,4 +1,3 @@
-import { tr } from "zod/v4/locales";
 import { TaskCategoryModel } from "../models/taskCategory.js";
 import { validateTaskCategory } from "../schemas/taskCategory.js";
 import { TaskCategoryService } from "../services/taskCategory.js";
