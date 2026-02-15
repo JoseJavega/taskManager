@@ -24,8 +24,17 @@ export class TaskCategoryController {
       res.status(400).json(validate.error);
       return;
     }
-    const newCategory = TaskCategoryModel.create({ input: validate.data });
-    res.status(201).json(newCategory);
+
+    try {
+      const newCategory = TaskCategoryModel.create({ input: validate.data });
+      res.status(201).json(newCategory);
+    } catch (error) {
+      console.error("[CategoryController Error]:", error);
+    // Fallo: 500 Internal Server Error (por ahora el genérico)
+      return res.status(500).json({ 
+        error: "No se pudo crear la categoría en el servidor" 
+      });
+    }
   }
 
   static async delete(req, res) {

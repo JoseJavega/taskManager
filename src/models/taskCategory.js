@@ -3,12 +3,19 @@ import { TaskCategories } from "../DB/DB_schemas.js";
 
 export class TaskCategoryModel {
   static create({ input }) {
-    const newCategory = {
+    try {
+      const newCategory = {
       _id: randomUUID(),
       name: input.name,
-    };
-    TaskCategories.create(newCategory).save();
-    return newCategory;
+      };
+
+      TaskCategories.create(newCategory).save();
+      return newCategory;
+
+    } catch (error) {
+      throw error
+    }
+     
   }
 
   static async update(taskCategoryId, input) {
