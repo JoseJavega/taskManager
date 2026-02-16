@@ -5,8 +5,8 @@ import { dinamicSelect } from "../utils/dinamicSelect.js";
 
 export class TasksView{
 
-  static resetTasksList(){
-    const taskContainer=document.getElementById('tasks-list');
+  static async resetTasksList(){
+    const taskContainer=document.getElementById('task-categories-container');
     if (!taskContainer) return;
     taskContainer.innerHTML='';
   };
@@ -18,7 +18,6 @@ export class TasksView{
   };
 
  static deleteCard(id){
-   // const taskList = document.getElementById('task-categories-container');
     const taskCard = document.querySelector(`[data-id="${id}"]`);
     if (taskCard){ taskCard.remove() };
     }

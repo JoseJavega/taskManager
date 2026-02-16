@@ -4,7 +4,7 @@ export class TaskCategoryView {
 
     // defaul Layout
     this.resetCategoryList(categoryContainer);
-    this.renderAddCategory(categoryContainer);
+    this.renderAddCategory(categoryContainer, state);
     this.renderList(categoryContainer, categoryList, state);
     this.renderDelCategory(categoryContainer, state);
   }
@@ -14,11 +14,13 @@ export class TaskCategoryView {
     container.innerHTML = "";
   }
 
-  static renderAddCategory(categoryContainer) {
+  static renderAddCategory(categoryContainer, state) {
     const addCategoryForm = document.createElement("form");
+    const formState = state.mode!="list" ? 'disabled' : '' ;  
+
     addCategoryForm.innerHTML = `
-      <input type="text" id="add-category-input" required placeholder="Nombre nueva categoría">
-      <button type="submit" id="add-category-btn">+ Añadir categoría</button>
+      <input type="text" id="add-category-input" required placeholder="Nombre nueva categoría" ${formState}>
+      <button type="submit" id="add-category-btn" ${formState}>+ Añadir categoría</button>
     `;
     categoryContainer.appendChild(addCategoryForm);
   }

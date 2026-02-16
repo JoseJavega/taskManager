@@ -19,7 +19,7 @@ export class TaskCategoryService {
       const data = await result.json();
       return data;
     } catch (error) {
-      console.log("error:", error);
+      console.error("error:", error);
     }
   }
 
@@ -30,18 +30,21 @@ export class TaskCategoryService {
     try {
       const result = await fetch(`${this.apiClient}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: data,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: data }),
       });
 
-      const newCategory = await result.json();
-      return newCategory;
+      if (!result.ok){
+        const errorData = await result.json();
+        throw new Error(errorData.error || "Error desconocido del servidor" );
+      }
+
+      return await result.json();
+
     } catch (error) {
-      console.error(error);
+      // Aqui solo llegan los errores de conexion con el servidor o el throw new error del try
+      console.error("Error en Service Front:", error.message);
+      throw error; // Lo relanzamos para que el Controller lo capture
     }
   }
 
@@ -61,7 +64,7 @@ export class TaskCategoryService {
       const updatedCategory = await result.json();
       return updatedCategory;
     } catch (error) {
-      console.log(error);
+      console.error('error:', error);
     }
   }
 
@@ -79,7 +82,7 @@ export class TaskCategoryService {
 
       if (result.status === 204) return true;
     } catch (error) {
-      console.error(error);
+      console.error('error:', error);
     }
   }
 

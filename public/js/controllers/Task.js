@@ -14,10 +14,12 @@ export class TaskController{
     // Ordenación de categorías
     this.sortCategoriesBy = 'name';
     this.sortCategoriesDirection = 'asc';
+
+    this.addEventListeners();
   }
 
   async init(){
-    TasksView.resetTasksList();
+    await TasksView.resetTasksList();
     const categories = await this.getPreparedCategory();
     if (categories){
       categories.forEach(element => {
@@ -31,9 +33,7 @@ export class TaskController{
       orderTasks.forEach(element => {
         TasksView.renderCard(element);
       });
-    }
-
-    this.addEventListeners();
+    };
   };
 
   // lectura de las categorias, ordenado y añadida "Sin Categoría" al principio
@@ -101,6 +101,8 @@ export class TaskController{
     this.container.addEventListener('click', this.handleClickEvent.bind(this));
     // evento generico para los modales
     window.addEventListener('modal:confirm', (e) => this.handleModalEvent(e));
+    // evento de control para cambio en las categorías desde el asidePanel
+    window.addEventListener('categoryUpdated', (e) => this.init() );    
   };
 
 }
