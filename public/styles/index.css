@@ -425,10 +425,16 @@ main {
         cursor: pointer;
       }
 
-      button:hover {
+      button:not(:disabled):hover {
         background-color: var(--color-btn-save);
         color: var(--color-white);
         transition: background-color var(--transition);
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        background-color: var(--color-secondary);
+        opacity: 0.6;
       }
     }
 
