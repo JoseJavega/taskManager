@@ -1,6 +1,6 @@
 import DBlocal from 'db-local';
 
-//ubicacion de la DBlocal
+// creacion de la base de datos y su ubicacion
 const { Schema } = new DBlocal ({path: './src/DB'});
 
 export const Tasks = Schema('tasks',{
@@ -10,5 +10,11 @@ export const Tasks = Schema('tasks',{
   completed: { type : Boolean, default:false},
   createdAt: { type: String, required: true},
   updatedAt: { type: String},
-  finishedAt: { type: String}
+  finishedAt: { type: String},
+  categoryId: { type: String, default:""}
+});
+
+export const TaskCategories = Schema('taskCategories',{
+  _id: { type: String, required: true},
+  name:  { type: String, required: true}
 });

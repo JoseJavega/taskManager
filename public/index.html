@@ -32,18 +32,28 @@
     <!-- SECCION TAREAS -->
     <section id="tasks-section">
       <div id="tasks-active-container" hidden></div>
-      <div id="tasks-list-container">
+      <div id="tasks-container">
         <h2>Lista de Tareas</h2>
-        <button class="btn-task-new" data-action="create">+ Crear tarea</button>
-        <ul id="tasks-list"></ul>
-        <ul id="tasks-completed-list"></ul>
+        <div id="tasks-buttons">
+          <button class="btn-task-new noseButton" data-action="create">+ Crear tarea</button>
+          <button class="btn-task-new btn-category-control" id="btn-category-control">
+            <p> <img src="./assets/icons/settings.svg" alt=""> Gestionar Categorías</p>
+          </button>
+        </div>
+        <div id="task-categories-container"></div>
       </div>
     </section>
   </main>
+  <!-- ASIDE DE GESTIONES VARIAS -->
+  <aside id="aside-panel">
+    <header>
+      <H2 id="aside-header"></H2>
+      <button id="aside-icon-close">X</button>
+    </header>
+    <div id="asideContent"></div>
+  </aside>
   <footer>
     <p>J.J. Desing 2026</p>
-    <!-- BOTON TEMPORAL PARA ABRIR EL FORMULARIO Y AÑADIR PERSONAS PARA PRUEBAS-->
-    <!-- <button type="button" id="btn-open-modal">Abrir modal</button> -->
   </footer>
 </body>
 </html>

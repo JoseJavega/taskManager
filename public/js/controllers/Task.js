@@ -1,102 +1,49 @@
 import { TasksView } from "../views/Task.js";
+import { TaskService } from "../services/Task.js";
+import { TaskCategoryService } from "../services/TaskCategory.js";
 import { sortCollection } from "../utils/sortCollection.js";
 
 export class TaskController{
   constructor(apiUrl, containerId){
-    this.apiClient= `${apiUrl}/tasks`;
+    this.taskService = new TaskService (apiUrl);
+    this.taskCategoryService = new TaskCategoryService (apiUrl);
     this.container = document.getElementById(containerId);
-    this.sortBy = 'title';
-    this.sortDirection= 'asc';
+    // Ordenación de tareas
+    this.sortTasksBy = 'title';
+    this.sortTasksDirection = 'asc';
+    // Ordenación de categorías
+    this.sortCategoriesBy = 'name';
+    this.sortCategoriesDirection = 'asc';
+
+    this.addEventListeners();
   }
 
   async init(){
-    const tasks = await this.getTasks();
+    await TasksView.resetTasksList();
+    const categories = await this.getPreparedCategory();
+    if (categories){
+      categories.forEach(element => {
+        TasksView.renderCategory(element);
+      });
+    };
+
+    const tasks = await this.taskService.getAll();
     if (tasks){
-      console.log(tasks);
-      TasksView.resetTasksList();
-      const orderTasks = sortCollection(tasks,this.sortBy,this.sortDirection);
+      const orderTasks = sortCollection(tasks, this.sortTasksBy, this.sortTasksDirection);
       orderTasks.forEach(element => {
         TasksView.renderCard(element);
       });
-    }
-
-    this.addEventListeners();
-  };
-
-  async getTasks(){
-    try {
-      const result= await fetch(this.apiClient);
-      const data= await result.json();
-      return data;
-    } catch (error) {
-      console.log('error:',error);
     };
   };
 
-  async getTaskById(id){
-    try {
-      const result= await fetch(`${this.apiClient}/${id}`);
-      const data= await result.json();
-      return data
-    } catch (error) {
-      console.log('error:',error);
-    };
+  // lectura de las categorias, ordenado y añadida "Sin Categoría" al principio
+  async getPreparedCategory(){
+    const categories = await this.taskCategoryService.getAll();
+    if (!categories) return null;
+    const orderCategories = sortCollection(categories, this.sortCategoriesBy, this.sortCategoriesDirection);
+    orderCategories.unshift({_id: 'uncategorized', name: 'Sin categoría'});
+    return orderCategories;
   };
-
-  async saveTask(data) {
-    if (!data) { return };
-    try {
-      const result = await fetch(`${this.apiClient}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          title: data.title,
-          description: data.description
-        })
-      });
-
-      const newTask= await result.json()
-      TasksView.renderCard(newTask);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async updateTask(data){
-    if (!data.id) { return }
-    const taskCompleted = data.finished==='on'? true : false;
-    try {
-      const result = await fetch(`${this.apiClient}/${data.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          title: data.title,
-          description: data.description,
-          completed: taskCompleted
-        })
-      });
-
-      const updateTask= await result.json()
-      TasksView.updateCard(updateTask);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async deleteTask(id){
-    try {
-      await fetch(`${this.apiClient}/${id}`,{
-        method: 'DELETE'
-      });
-     return id;
-    } catch (error) {
-      throw new Error(error);
-    };
-  }
 
   // Manejador de eventos de clicks en la ventana de tareas
   async handleClickEvent(e){
@@ -108,18 +55,20 @@ export class TaskController{
     //CRUD de tareas
     switch (action){
       case 'create':
-        TasksView.openModal();
+        TasksView.openModal( await this.getPreparedCategory() );
         break;
       case 'edit':
-        TasksView.openModal(await this.getTaskById(taskId));
+        TasksView.openModal( await this.getPreparedCategory() , await this.taskService.getById(taskId) );
         break;
       case 'delete':
-        TasksView.openModalConfirmation( await this.getTaskById(taskId) );
+        TasksView.openModalConfirmation( await this.taskService.getById(taskId) );
         break;
       case 'finish':
         const isCompleted = taskCard.classList.contains('completed');
         const data = { id:taskId, finished: isCompleted ? '' : 'on' }
-        this.updateTask(data);
+        const updatedTask = await this.taskService.update(data);
+        TasksView.deleteCard(updatedTask._id);
+        TasksView.renderCard(updatedTask);
         break;
     };
   };
@@ -129,10 +78,20 @@ export class TaskController{
     const { type, action, data } = e.detail;
       if (type !== 'task') return; // ignorar otros tipos de modales
       // Aquí recibes los datos del formulario
-      if (action==='create') { this.saveTask(data) };
-      if (action==='update') { this.updateTask(data) };
+      if (action==='create') {
+        console.log(data);
+        const createdTask = await this.taskService.save(data);
+        if (createdTask) { TasksView.renderCard(createdTask); }
+      };
+      if (action==='update') {
+        const updatedTask = await this.taskService.update(data)
+        if (updatedTask) {
+          TasksView.deleteCard(updatedTask._id);
+          TasksView.renderCard(updatedTask);
+          }
+      };
       if (action==='delete') {
-        const deleted = await this.deleteTask(data.id)
+        const deleted = await this.taskService.delete(data.id)
         if (deleted) { TasksView.deleteCard(deleted); };
       };
   };
@@ -142,7 +101,8 @@ export class TaskController{
     this.container.addEventListener('click', this.handleClickEvent.bind(this));
     // evento generico para los modales
     window.addEventListener('modal:confirm', (e) => this.handleModalEvent(e));
+    // evento de control para cambio en las categorías desde el asidePanel
+    window.addEventListener('categoryUpdated', (e) => this.init() );    
   };
-
 
 }
