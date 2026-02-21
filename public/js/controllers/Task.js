@@ -21,14 +21,14 @@ export class TaskController{
   async init(){
     await TasksView.resetTasksList();
     const categories = await this.getPreparedCategory();
-    if (categories){
-      categories.forEach(element => {
+    if (!categories) return;
+    categories.forEach(element => {
         TasksView.renderCategory(element);
-      });
-    };
+    });
 
     const tasks = await this.taskService.getAll();
-    if (!tasks || tasks.length ===0) return;
+    console.log(tasks);
+    if (!tasks || tasks.length === 0) return;
 
     const orderTasks = sortCollection(tasks, this.sortTasksBy, this.sortTasksDirection);
     orderTasks.forEach(element => {
@@ -39,7 +39,7 @@ export class TaskController{
   // lectura de las categorias, ordenado y añadida "Sin Categoría" al principio
   async getPreparedCategory(){
     const categories = await this.taskCategoryService.getAll();
-    if (!categories) return null;
+    if (!categories || categories.length===0) return null;
     const orderCategories = sortCollection(categories, this.sortCategoriesBy, this.sortCategoriesDirection);
     orderCategories.unshift({_id: 'uncategorized', name: 'Sin categoría'});
     return orderCategories;

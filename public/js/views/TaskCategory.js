@@ -5,8 +5,10 @@ export class TaskCategoryView {
     // defaul Layout
     this.resetCategoryList(categoryContainer);
     this.renderAddCategory(categoryContainer, state);
-    this.renderList(categoryContainer, categoryList, state);
-    this.renderDelCategory(categoryContainer, state);
+    if (categoryList){
+      this.renderList(categoryContainer, categoryList, state);
+      this.renderDelCategory(categoryContainer, state);
+    }
   }
 
   static resetCategoryList(container) {

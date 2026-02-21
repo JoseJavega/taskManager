@@ -19,8 +19,11 @@ export class TaskCategoryController {
   }
 
   async init() {
-    const categories = await this.categoryService.getAll();
-    const orderCategories = categories ? sortCollection(categories, "name", "asc") : null;
+    let orderCategories;
+    const categories = ( await this.categoryService.getAll() ) || [];
+    if (categories.length > 0) {
+      orderCategories = categories ? sortCollection(categories, "name", "asc") : null;
+    }
     TaskCategoryView.render( this.categorieAside.asidePanel, this.state, orderCategories );
   }
 
