@@ -5,6 +5,7 @@ node_modules/
 .env
 src/DB/tasks.json
 src/DB/taskCategories.json
+src/DB/taskmanager.sqlite3
 
 # directorios varios
 public/js/tests/
