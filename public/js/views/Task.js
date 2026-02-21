@@ -23,11 +23,13 @@ export class TasksView{
     }
 
   static renderCard(input){
+    if (!input) return;
     //DIV de la categoria
     const categoryContainer = input.categoryId ?
       document.querySelector(`[id="${input.categoryId}"]`) :
       document.querySelector('#uncategorized');
-    //listas de tareas
+    
+      //listas de tareas
     const taskList = categoryContainer.querySelector('.tasks-list');
     const taskCompletedList = categoryContainer.querySelector('.tasks-list-completed');
 
