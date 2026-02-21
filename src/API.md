@@ -1,6 +1,7 @@
 # 📖 API Reference - Task Management
 
 Esta documentación detalla los contratos de comunicación, modelos de datos y estados de respuesta de la API.
+
 - **Base URL:** http://localhost:3000/api
 - **Content-Type:** application/json
 
@@ -38,16 +39,60 @@ Esta documentación detalla los contratos de comunicación, modelos de datos y e
 | PATCH  | `/:id`   | Actualización parcial de una tarea                           | `200`, `400`, `404` |
 | DELETE | `/:id`   | Eliminar una tarea                                           | `204`, `404`        |
 
+#### Ejemplo de peticiones
+
+- POST /tasks
+
+Body
+
+```
+{
+  "title":"Título obligatorio",
+  "description":"Opcional",
+  "completed": true // opcional (false by default),
+  "categoryId":"550e8400-e29b-41d4-a716-446655440000"  // opcional
+}
+```
+
+- PATCH /tasks/taskId
+  Se envían solo los campos que cambian.
+
+Body
+
+```
+{
+  "completed": false,
+  "categoryId": "" // en db-lolcal equivale a "uncategorized"
+}
+```
+
 ### Categorías (`/api/taskCategories`)
 
-| Método | Endpoint | Descripción                                                  | Status Code         |
-| :----- | :------- | :----------------------------------------------------------- | :------------------ |
-| GET    | `/`      | Listar todas las categorías                                  | `200`               |
-| GET    | `/:id`   | Obtener categoría por ID                                     | `200`, `404`        |
-| POST   | `/`      | Crear nueva categoría                                        | `201`, `400`        |
-| POST   | `/delete`| Borra categorías, reasigna las tareas a "uncategorized"      | `204`, `404`        |
-| PATCH  | `/:id`   | Editar nombre de categoría                                   | `200`, `404`        |
+| Método | Endpoint  | Descripción                                             | Status Code  |
+| :----- | :-------- | :------------------------------------------------------ | :----------- |
+| GET    | `/`       | Listar todas las categorías                             | `200`        |
+| GET    | `/:id`    | Obtener categoría por ID                                | `200`, `404` |
+| POST   | `/`       | Crear nueva categoría                                   | `201`, `400` |
+| POST   | `/delete` | Borra categorías, reasigna las tareas a "uncategorized" | `204`, `404` |
+| PATCH  | `/:id`    | Editar nombre de categoría                              | `200`, `404` |
 
+#### Ejemplo de peticiones
+
+Especial atención al endponit de borrado, NO usa DELETE
+
+- POST /api/taskCategories/delete
+
+  Este endpoint requiere un objeto con un array de IDs aunque solo se requiera borrar 1 categoria.
+  El servidor reasignará automáticamente las tareas vinculadas a "uncategorized".
+  Si algún id no se encuentra en la BBDD se ignora.
+
+Body
+
+```json
+{
+  "categoriesIds": ["uuid-1", "uuid-2", "uuid-n"]
+}
+```
 
 ---
 
@@ -74,20 +119,5 @@ Esta documentación detalla los contratos de comunicación, modelos de datos y e
 {
   "_id": "uuid (generado en la API)",
   "name": "string (required)"
-}
-```
-
-## 📥 Payloads
-
-### Categorías
-
-- **Endpoint:** `POST /api/taskCategories/delete`
-  Este endpoint requiere un objeto con un array de IDs.
-  El servidor reasignará automáticamente las tareas vinculadas a uncategorized.
-  Si algún id no se encuentra en la BBDD se ignora.
-
-```json
-{
-  "categoriesIds": ["uuid-1", "uuid-2", "uuid-n"]
 }
 ```
