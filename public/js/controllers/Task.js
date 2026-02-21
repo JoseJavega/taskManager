@@ -28,12 +28,12 @@ export class TaskController{
     };
 
     const tasks = await this.taskService.getAll();
-    if (tasks){
-      const orderTasks = sortCollection(tasks, this.sortTasksBy, this.sortTasksDirection);
-      orderTasks.forEach(element => {
+    if (!tasks || tasks.length ===0) return;
+
+    const orderTasks = sortCollection(tasks, this.sortTasksBy, this.sortTasksDirection);
+    orderTasks.forEach(element => {
         TasksView.renderCard(element);
-      });
-    };
+    });
   };
 
   // lectura de las categorias, ordenado y añadida "Sin Categoría" al principio
