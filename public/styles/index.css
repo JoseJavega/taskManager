@@ -329,7 +329,7 @@ dialog::backdrop {
 @media screen and (min-width: 600px){
 
   .btn--regular{
-    font-size: var(--font-size-xxl);
+    font-size: var(--font-size-body);
     border-radius: var(--radius-s);
     width: auto;
     min-height: 0;
