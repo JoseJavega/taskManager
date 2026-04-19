@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/normalize.css" />
+    <link rel="stylesheet" href="./styles/viejo.css" />
+    <link rel="stylesheet" href="./styles/index.css">
+    <script type="module" src="./js/main.js"></script>
+    <title>Task Manager</title>
+  </head>
+  <body>
+    <header class="main-header">
+      <h1 class="main-header__title">Gestor de tareas</h1>
+    </header>
+    <main>
+      <!-- MODAL FORMULARIO DE ALTA Y EDICION-->
+      <dialog class="modal" id="modal-form">
+        <button class="modal__close" id="modal-form-close" type="button">X</button>
+        <div class="modal__body" id="modal-form-body"></div>
+        <div class="modal__actions">
+          <button class="btn btn--regular btn--primary" id="modal-form-submit" data-action="save" type="button">
+            Guardar
+          </button>
+        </div>
+      </dialog>
+      <!-- MODAL PARA CONFIRMACION DE BORRADOS-->
+      <dialog class="modal modal--confirmation" id="modal-confirmation">
+        <button class="modal__close" id="modal-confirmation-close" type="button">X</button>
+        <div class="modal__body" id="modal-confirmation-body"></div>
+        <div class="modal__actions">
+          <button class="btn btn--regular btn--danger" type="button" data-action="cancel" id="btn-modal-cancel">
+            Cancelar
+          </button>
+          <button class="btn btn--regular btn--primary" type="button" data-action="confirm" id="btn-modal-confirm">
+            Confirmar
+          </button>
+        </div>
+      </dialog>
+      <!-- SECCION TAREAS -->
+      <section id="tasks-section">
+        <div id="tasks-active-container" hidden></div>
+        <div id="tasks-container">
+          <h2>Lista de Tareas</h2>
+          <div id="tasks-buttons">
+            <button class="btn-task-new noseButton" data-action="create">+ Crear tarea</button>
+            <button class="btn-task-new btn-category-control" id="btn-category-control">
+              <p>
+                <img src="./assets/icons/settings.svg" alt="" />
+                 Gestionar
+                Categorías
+              </p>
+            </button>
+          </div>
+          <div id="task-categories-container"></div>
+        </div>
+      </section>
+    </main>
+    <!-- ASIDE DE GESTIONES VARIAS -->
+    <aside id="aside-panel">
+      <header>
+        <h2 id="aside-header"></h2>
+        <button id="aside-icon-close">X</button>
+      </header>
+      <div id="asideContent"></div>
+    </aside>
+    <footer>
+      <p>J.J. Desing 2026</p>
+    </footer>
+  </body>
+</html>

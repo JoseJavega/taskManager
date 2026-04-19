@@ -1,0 +1,446 @@
+/* === MODALS === */
+#modal-confirmation-body {
+  h2 {
+  }
+  p {
+  }
+  #task-data {
+  }
+}
+
+/* === HEADER === */
+
+/* === MAIN === */
+main {
+}
+
+.bold {
+  font-weight: bold;
+}
+
+/* === TASKS SECTION === */
+#tasks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+}
+
+#tasks-active-container,
+#tasks-container {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius);
+  padding: var(--spacing);
+  box-shadow: var(--shadow);
+}
+
+#tasks-container {
+  ul {
+    margin-top: var(--spacing);
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  #tasks-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-radius: var(--radius-small);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .noseButton {
+    flex-grow: 1;
+  }
+
+  .btn-task-new {
+    padding: var(--spacing);
+    background-color: inherit;
+    color: var(--color-white);
+    border-radius: inherit;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+  }
+
+  .btn-category-control {
+    align-self: flex-end;
+    margin-left: auto;
+    background-color: inherit;
+    color: inherit;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    p {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+    }
+
+    img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.category-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--spacing);
+
+  h2 {
+    text-align: left;
+    font-style: italic;
+    font-size: 1rem;
+  }
+
+  ul {
+    width: 100%;
+  }
+
+  .task-card {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    background: var(--color-bg);
+    border-radius: var(--radius-small);
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .task-info-main {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: space-between;
+  }
+
+  .task-info-main p {
+    flex: 1;
+  }
+
+  .btn_crud--container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .btn_crud {
+    align-self: center;
+  }
+
+  .btn_crud img {
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    width: 20px;
+  }
+
+  .btn_crud--delete img:hover {
+    background-color: var(--color-danger);
+    transition: background-color var(--transition);
+  }
+
+  .btn_crud--edit img:hover {
+    background-color: var(--color-accent);
+    transition: background-color var(--transition);
+  }
+
+  .btn_crud--finish {
+    border: 1px solid var(--color-primary);
+  }
+
+  .btn_crud--finish img {
+    height: 15px;
+    width: 15px;
+    border-radius: 0;
+    background-color: var(--color-white);
+  }
+
+  .btn_crud--finish img:hover {
+    background-color: var(--color-btn-save);
+    transition: background-color var(--transition);
+  }
+
+  .completed {
+    background-color: var(--color-secondary);
+
+    .btn_crud--finish img {
+      background-color: var(--color-btn-save);
+    }
+
+    .task-text {
+      text-decoration: line-through;
+    }
+  }
+
+  .substring {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    font-size: var(--font-size-small);
+    font-style: italic;
+    font-weight: lighter;
+  }
+}
+
+/* === ASIDE PANEL === */
+#aside-panel {
+  position: fixed;
+  top: var(--header-height);
+  right: -300px;
+  height: 100vh;
+  width: 300px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-secondary);
+  transition: transform 0.2s ease;
+
+  header {
+    background-color: inherit;
+    height: calc(var(--header-height) / 2);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: var(--color-secondary) 1px solid;
+
+    h2 {
+      color: var(--color-primary);
+    }
+
+    button {
+      width: 20px;
+      height: 20px;
+      border: none;
+      background-color: transparent;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: var(--color-danger);
+      color: var(--color-white);
+    }
+  }
+
+  #asideContent {
+    form {
+      padding: 8px;
+      background-color: var(--color-bg);
+      border-bottom: 1px solid var(--color-secondary);
+
+      input {
+        width: 100%;
+        border-radius: 5px;
+        padding-left: 3px;
+        line-height: 2rem;
+        outline: none;
+        box-shadow: none;
+        border: none;
+        margin-bottom: 10px;
+      }
+
+      button {
+        height: 2rem;
+        padding: 5px;
+        border-radius: 5px;
+        text-align: center;
+        display: block;
+        margin: 0 auto;
+        background-color: var(--color-secondary);
+        border: none;
+        cursor: pointer;
+      }
+
+      button:not(:disabled):hover {
+        background-color: var(--color-btn-save);
+        color: var(--color-white);
+        transition: background-color var(--transition);
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        background-color: var(--color-secondary);
+        opacity: 0.6;
+      }
+    }
+
+    ul {
+      padding: 8px;
+
+      li {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        line-height: 2rem;
+        cursor: pointer;
+
+        input[type="checkbox"] {
+          cursor: pointer;
+        }
+
+        button {
+          height: 28px;
+          width: 28px;
+          align-self: center;
+        }
+
+        button img {
+          background-color: var(--color-primary);
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          height: 25px;
+          width: 25px;
+        }
+
+        .cancel_edit img:hover {
+          background-color: var(--color-danger);
+          transition: background-color var(--transition);
+        }
+
+        .save_edit img:hover {
+          background-color: var(--color-btn-save);
+          transition: background-color var(--transition);
+        }
+
+        input {
+          line-height: 1.8rem;
+          border-radius: 5px;
+          padding-left: 5px;
+        }
+      }
+    }
+
+    .aside_btn_wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 10px;
+
+      button {
+        height: 2rem;
+        padding: 5px;
+        border-radius: 5px;
+        text-align: center;
+        background-color: var(--color-bg);
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: var(--color-secondary);
+        transition: background-color var(--transition);
+      }
+
+      .btn-savechanges:hover {
+        background-color: var(--color-danger);
+        color: var(--color-white);
+      }
+    }
+  }
+}
+
+.aside-visible {
+  transition: transform 0.2s ease;
+  transform: translateX(-300px);
+}
+
+/* === FOOTER === */
+footer {
+  text-align: center;
+  padding: var(--spacing);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* === BUTTONS === */
+.btn {
+}
+
+.btn:hover {
+}
+
+.btn[data-action="cancel"] {
+}
+
+.btn[data-action="cancel"]:hover {
+}
+
+.btn[data-action="confirm"] {
+}
+
+.btn[data-action="confirm"]:hover {
+  opacity: 1;
+}
+
+.btn[data-action="save"] {
+}
+
+.btn[data-action="save"]:hover {
+}
+
+/* === MEDIA QUERIES === */
+
+/* Tablet (>=768px) */
+@media (min-width: 768px) {
+  header h1 {
+  }
+
+  main {
+  }
+
+  #tasks {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  #tasks__active,
+  #tasks__list {
+    flex: 1 1 calc(50% - var(--spacing));
+    min-height: 200px;
+  }
+
+  footer {
+    align-items: center;
+  }
+}
+
+/* Escritorio (>=1024px) */
+@media (min-width: 1024px) {
+  header h1 {
+  }
+
+  main {
+  }
+
+  #tasks {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  #tasks-active-container,
+  #tasks-list {
+    min-height: 250px;
+  }
+
+  .modal {
+  }
+
+  .btn {
+  }
+}

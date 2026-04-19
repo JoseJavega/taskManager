@@ -121,9 +121,9 @@ export class TasksView{
     if (!dataTask){ return };
 
     const modalFormBody = `
-      <H2>ELIMINAR TAREA</H2>
-      <p>Se va a eliminar la tarea</p>
-      <p id='task-data' data-id="${dataTask._id}">${dataTask.title}</p> `;
+      <H2 class="modal--confirmation__title">ELIMINAR TAREA</H2>
+      <p class="modal--confirmation__text">Se va a eliminar la tarea</p>
+      <p id='task-data' data-id="${dataTask._id}" class="modal--confirmation__text--accent">${dataTask.title}</p> `;
 
     ModalConfirmation.open('task', 'delete', modalFormBody);
   }

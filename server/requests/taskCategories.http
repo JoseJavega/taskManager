@@ -1,0 +1,43 @@
+### CREAR categoria
+POST http://localhost:3000/api/taskCategories
+Content-Type: application/json
+
+{
+  "name": "categoria de prueba 3"
+}
+
+### RECUPERAR UNA categoria
+GET http://localhost:3000/api/taskCategories/40e5e6f6-527f-469b-b161-3dbe1f3487e8
+
+### RECUPERAR TODAS las categorias
+GET http://localhost:3000/api/taskCategories
+
+### DELETE categoria
+DELETE  http://localhost:3000/api/taskCategories/cd26fa03-78da-4159-97e7-0fc68e6724c3
+
+### DELETE MANY categorias
+POST http://localhost:3000/api/taskCategories/delete
+Content-Type: application/json
+
+{
+  "categoriesIds": ["f28235e4-1315-49e3-898f-602201641957", "0f5f3093-65e7-43a0-b275-5e12d1d5b482","0f5f3093-65e7-43a0-b275-5e12d1d5b635"]
+}
+
+### UPDATE categoria
+PATCH  http://localhost:3000/api/taskCategories/40e5e6f6-527f-469b-b161-3dbe1f3487e8
+Content-Type: application/json
+
+{
+  "name": "NodeJs"
+}
+
+### Prueba 404: Borrar algo que no existe
+DELETE http://localhost:3000/api/taskCategories/id-falso-123
+
+### Prueba 400: Crear sin nombre (Validación)
+POST http://localhost:3000/api/taskCategories
+Content-Type: application/json
+
+{
+  "campo_inventado": "error"
+}

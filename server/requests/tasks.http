@@ -1,0 +1,26 @@
+### CREAR tarea
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Tarea 3",
+  "description": "para eliminar categoria",
+  "categoryId": "1a50d6a9-25f0-47fc-9d09-644c66e69331"
+}
+
+### RECUPERAR UNA tarea
+GET http://localhost:3000/api/tasks/79e9dfcd-836b-4dc1-83db-65a5c8e5555d
+
+### RECUPERAR TODAS las tareas
+GET http://localhost:3000/api/tasks
+
+### DELETE task
+DELETE  http://localhost:3000/api/tasks/6aa52e96-7710-4387-8603-e7f9678d52ca
+
+### UPDATE tarea
+PATCH  http://localhost:3000/api/tasks/8d0f55b2-b693-42f2-9329-cf7b9c4b23ff
+Content-Type: application/json
+
+{
+    "categoryId": "b573869d-256d-4ce6-828a-78a1a0f27e72"
+}

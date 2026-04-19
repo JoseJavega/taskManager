@@ -17,7 +17,7 @@ app.disable("x-powered-by"); // desabilita la cabecera de express
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // permite a express servir directamente los archivos estáticos de public
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(express.static(path.join(__dirname, "..", "web")));
 
 // ROUTES
 app.use("/api/tasks", tasksRouter);
@@ -25,7 +25,7 @@ app.use("/api/taskCategories", taskCategoriesRouter);
 
 // Ruta general para servir index.html a todas las rutas que no coincidan antes
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "web", "index.html"));
 });
 
 const PORT = process.env.PORT ?? 3000;

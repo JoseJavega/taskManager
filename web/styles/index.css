@@ -2,25 +2,25 @@
 :root {
   /* Colores - Nombres funcionales*/
   --color-bg: #dadbddf0;
-  --color-surface:#fff;
-  --color-border:#8793a3;
+  --color-surface: #fff;
+  --color-border: #8793a3;
   --color-text-main: #2f3640;
   --color-text-muted: #8793a3;
-  --color-text-inv:#fff;
+  --color-text-inv: #fff;
   --color-primary: #2f3640;
   --color-secondary: #8793a3;
   --color-accent: #00a8ff;
   --color-success: #255e22;
   --color-danger: #b53d1f;
-  --color-focus: rgba(0,168,255,0.25);
+  --color-focus: rgba(0, 168, 255, 0.25);
 
   /* Layout y espaciado */
   --radius-s: 6px;
   --radius-m: 8px;
   --space-xs: 0.25rem; /* 4px */
-  --space-s:  0.5rem;  /* 8px */
-  --space-m:  1rem;    /* 16px (estandar general) */
-  --space-l:  1.5rem;  /* 24px */
+  --space-s: 0.5rem; /* 8px */
+  --space-m: 1rem; /* 16px (estandar general) */
+  --space-l: 1.5rem; /* 24px */
   --space-xxl: 5rem;
   --max-width: 1200px;
   --header-h: 72px;
@@ -40,25 +40,34 @@
 
   /* Efectos */
   --shadow-s: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-               0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-focus:0 0 0 3px var(--color-focus);
-  --transition: all 0.2s ease;
+  --shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-focus: 0 0 0 3px var(--color-focus);
+  --transition: all 0.3s ease;
 }
 
 /* === RESETEO GLOBAL === */
-*, *::before, *::after  {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit; /* Evita que los inputs tengan fuentes distintas al body */
 }
 
@@ -107,14 +116,16 @@ textarea {
   font-family: inherit;
   font-size: inherit;
   color: var(--color-text-main);
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
 }
 
-textarea{
+textarea {
   resize: none;
 }
 
- /* main{
+/* main{
   flex: 1;
   padding: var(--spacing);
   width: 100%;
@@ -149,15 +160,32 @@ dialog::backdrop {
 /*------------  FIN ESTILOS BASE  -------------*/
 
 /* === COMPONENTES: MODALES === */
-.modal{
+/* .modal {
   background-color: var(--color-secondary);
   border-radius: var(--radius-m) var(--radius-m) 0 0;
   box-shadow: var(--shadow-xl);
-  margin-top: auto; /* Para que se Bottom Sheet en movil*/
-  position: relative; /* Para colocar el modal_close */
+  margin-top: auto; /* Para que se Bottom Sheet en movil
+  position: relative; /* Para colocar el modal_close
+}  */
+
+.modal {
+  background-color: var(--color-secondary);
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+  box-shadow: var(--shadow-xl);
+  margin-top: auto;
+  margin-bottom: 0;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+
+  transform: translateY(100%);
+  transition: var(--transition);
 }
 
-.modal__close{
+.modal-visible {
+  transform: translateY(0);
+}
+.modal__close {
   position: absolute;
   top: var(--space-s);
   right: var(--space-s);
@@ -174,62 +202,70 @@ dialog::backdrop {
   transition: var(--transition);
 }
 
-.modal__close:hover{
+.modal__close:hover {
   opacity: 1;
   background-color: var(--color-danger);
   color: var(--color-text-inv);
 }
 
-.modal__body{
+.modal__body {
   padding: var(--space-m);
   padding-bottom: 0;
 }
 
-.modal__actions{
+.modal__actions {
   display: flex;
   flex-direction: row;
   gap: 0;
   justify-content: center;
 }
 
-.modal--confirmation__title{
+.modal--confirmation__title {
   display: block;
   text-align: center;
   margin-bottom: var(--space-m);
 }
 
-.modal--confirmation__text{
+.modal--confirmation__text {
   text-align: center;
 }
 
-.modal--confirmation__text--accent{
+.modal--confirmation__text--accent {
   text-align: center;
   font-weight: bold;
   margin-bottom: var(--space-m);
 }
 
 /* Media Query MODALES */
-@media (min-width: 600px){
-
-  .modal{
+@media (min-width: 600px) {
+  .modal {
     max-width: var(--modal-s);
     min-height: 0;
     max-height: 90vh;
     margin: auto;
     border-radius: var(--radius-m);
     overflow-y: auto;
+
+    transform: scale(0.2);
+    opacity: 0;
+    transition: var(--transition);
   }
 
-  .modal__close{
+  .modal-visible {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .modal__close {
     background-color: var(--color-primary);
     color: var(--color-text-muted);
   }
 
-  .modal--confirmation__text--accent{
+  .modal--confirmation__text--accent {
     margin-bottom: 0;
   }
 
-  .modal__actions{
+  .modal__actions {
     padding: var(--space-m);
     gap: var(--space-m);
   }
@@ -242,7 +278,7 @@ dialog::backdrop {
   text-align: center;
 }
 
-.form__label{
+.form__label {
   display: block;
   font-size: var(--font-size-s);
   font-weight: 600;
@@ -250,16 +286,16 @@ dialog::backdrop {
   color: var(--color-text-main);
 }
 
-.form-group{
+.form-group {
   display: flex;
   margin-bottom: var(--space-s);
 }
 
-.form-group--column{
+.form-group--column {
   flex-direction: column;
 }
 
-.form-group--row{
+.form-group--row {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
@@ -282,17 +318,17 @@ dialog::backdrop {
   transition: var(--transition);
 }
 
-.btn:disabled{
+.btn:disabled {
   opacity: 0.5;
-  cursor:not-allowed;
+  cursor: not-allowed;
   filter: grayscale();
 }
 
-.btn:hover{
+.btn:hover {
   filter: brightness(1.2);
 }
 
-.btn--regular{
+.btn--regular {
   font-size: var(--font-size-l);
   padding: var(--space-s) var(--space-m);
   opacity: 0.8;
@@ -304,7 +340,7 @@ dialog::backdrop {
 .btn--small {
   width: 20px;
   height: 20px;
-  padding: 0;   /* Al ser inline-flex, el icono se centrará solo */
+  padding: 0; /* Al ser inline-flex, el icono se centrará solo */
 }
 
 /* Guardar o Confirmar */
@@ -326,10 +362,9 @@ dialog::backdrop {
 }
 
 /* Media Query BOTONES */
-@media screen and (min-width: 600px){
-
-  .btn--regular{
-    font-size: var(--font-size-xxl);
+@media screen and (min-width: 600px) {
+  .btn--regular {
+    font-size: var(--font-size-l);
     border-radius: var(--radius-s);
     width: auto;
     min-height: 0;
@@ -339,26 +374,25 @@ dialog::backdrop {
   .btn--primary {
     background-color: var(--color-primary);
   }
-  .btn--primary:hover{
+  .btn--primary:hover {
     background-color: var(--color-success);
   }
 
   /* Cancelar */
   .btn--secondary {
-  background-color: var(--color-secondary);
-  color: var(--color-text-main);
-  border: 1px solid var(--color-primary);
+    background-color: var(--color-secondary);
+    color: var(--color-text-main);
+    border: 1px solid var(--color-primary);
   }
   .btn--secondary:hover {
-  background-color: var(--color-primary);
-  color: var(--color-text-inv);
+    background-color: var(--color-primary);
+    color: var(--color-text-inv);
   }
-
 }
 /*------------  FIN BOTONES  -------------*/
 
 /* === HEADER === */
-.main-header{
+.main-header {
   background-color: var(--color-primary);
   color: var(--color-text-inv);
   text-align: center;
@@ -367,8 +401,8 @@ dialog::backdrop {
   height: var(--header-h);
 }
 
-.main-header__title{
-  font-size: var(--font-size-xl) ;
+.main-header__title {
+  font-size: var(--font-size-xxl);
   line-height: 1;
   margin: 0;
 }
